@@ -19,8 +19,9 @@ namespace ITCanCook_DataAcecss.Entities
 		public int IngredientCategoryId { get; set; }
 
 		public string name { get; set; }
+        public string Img { get; set; }
 
-		public IngredientCategory IngredientCategory { get; set;}
+        public IngredientCategory IngredientCategory { get; set;}
 
 
 	}

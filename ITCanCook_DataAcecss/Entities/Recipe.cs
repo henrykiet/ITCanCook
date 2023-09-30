@@ -25,7 +25,7 @@ namespace ITCanCook_DataAcecss.Entities
 		public int CookingMethodId { get; set; }
 
 		public string ImgLink { get; set; }
-		public DateTime CookingTime { get; set; }
+		public int CookingTime { get; set; }
 		public string? Description { get; set; }
 		public int ServingSize { get; set; }
 		

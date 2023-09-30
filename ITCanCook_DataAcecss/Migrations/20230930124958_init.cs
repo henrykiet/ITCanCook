@@ -1,11 +1,10 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace ITCanCook_DataAcecss.Migrations
 {
-    public partial class DbInit : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -72,7 +71,8 @@ namespace ITCanCook_DataAcecss.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IngredientCategoryId = table.Column<int>(type: "int", nullable: false),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Img = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -95,7 +95,7 @@ namespace ITCanCook_DataAcecss.Migrations
                     RecipeStyleId = table.Column<int>(type: "int", nullable: false),
                     CookingMethodId = table.Column<int>(type: "int", nullable: false),
                     ImgLink = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CookingTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CookingTime = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ServingSize = table.Column<int>(type: "int", nullable: false)
                 },
