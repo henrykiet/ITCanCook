@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ITCanCook_DataAcecss.Migrations
 {
     [DbContext(typeof(ITCanCookContext))]
-    [Migration("20231001051338_init")]
+    [Migration("20231001052231_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
