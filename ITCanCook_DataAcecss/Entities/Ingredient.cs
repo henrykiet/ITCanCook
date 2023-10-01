@@ -24,5 +24,6 @@ namespace ITCanCook_DataAcecss.Entities
         public IngredientCategory IngredientCategory { get; set;}
 
 
+
 	}
 }

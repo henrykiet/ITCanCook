@@ -17,7 +17,7 @@ namespace ITCanCook_DataAcecss
             
         }
 
-		#region
+		#region DBSet
 		public DbSet<Recipe>? Recipes { get; set; }
 		public DbSet<RecipeAmount>? recipeAmounts { get; set; }
 		public DbSet<RecipeCategory>? recipeCategories { get; set; }

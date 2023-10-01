@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -62,6 +63,25 @@ namespace ITCanCook_DataAcecss.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RecipeStyle", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Dob = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Role = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -130,6 +150,7 @@ namespace ITCanCook_DataAcecss.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RecipeId = table.Column<int>(type: "int", nullable: false),
                     IngredientId = table.Column<int>(type: "int", nullable: false),
+                    AccountId = table.Column<int>(type: "int", nullable: false),
                     Amount = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -145,6 +166,12 @@ namespace ITCanCook_DataAcecss.Migrations
                         name: "FK_RecipeAmount_Recipe_RecipeId",
                         column: x => x.RecipeId,
                         principalTable: "Recipe",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RecipeAmount_User_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -192,6 +219,11 @@ namespace ITCanCook_DataAcecss.Migrations
                 column: "RecipeStyleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RecipeAmount_AccountId",
+                table: "RecipeAmount",
+                column: "AccountId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RecipeAmount_IngredientId",
                 table: "RecipeAmount",
                 column: "IngredientId");
@@ -217,6 +249,9 @@ namespace ITCanCook_DataAcecss.Migrations
 
             migrationBuilder.DropTable(
                 name: "Ingredient");
+
+            migrationBuilder.DropTable(
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "Recipe");

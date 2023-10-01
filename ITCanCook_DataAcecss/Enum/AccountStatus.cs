@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace ITCanCook_DataAcecss.Enum
 {
-	public enum Role
+	public enum AccountStatus
 	{
-		ADMIN,
-		CHEF,
-		CUSTOMER
 	}
 }

@@ -28,7 +28,8 @@ namespace ITCanCook_DataAcecss.Entities
 		public int CookingTime { get; set; }
 		public string? Description { get; set; }
 		public int ServingSize { get; set; }
-		
+
+
 		public List<RecipeStep> Steps { get; set; }
 		public List<RecipeAmount> Amounts { get; set; }
 
@@ -36,7 +37,6 @@ namespace ITCanCook_DataAcecss.Entities
 		public RecipeCategory RecipeCategory { get; set; }
 		public RecipeStyle RecipeStyle { get; set; }
 		public CookingMethod CookingMethod { get; set; }
-
 
 	}
 }
