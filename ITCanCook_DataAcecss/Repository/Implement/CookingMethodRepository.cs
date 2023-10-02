@@ -1,5 +1,6 @@
 ﻿using ITCanCook_DataAcecss.Entities;
 using ITCanCook_DataAcecss.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace ITCanCook_DataAcecss.Repository.Implement
 {
