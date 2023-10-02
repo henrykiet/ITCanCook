@@ -220,17 +220,32 @@ namespace ITCanCook_DataAcecss.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("CookingMethodId")
+                        .HasColumnType("int");
+
                     b.Property<int>("IngredientId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RecipeCategoryId")
                         .HasColumnType("int");
 
                     b.Property<int>("RecipeId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("RecipeStyleId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CookingMethodId");
 
                     b.HasIndex("IngredientId");
 
+                    b.HasIndex("RecipeCategoryId");
+
                     b.HasIndex("RecipeId");
+
+                    b.HasIndex("RecipeStyleId");
 
                     b.ToTable("RecipeAmount");
                 });
@@ -279,9 +294,14 @@ namespace ITCanCook_DataAcecss.Migrations
                     b.Property<int>("RecipeId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("RecipeId1")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("RecipeId");
+
+                    b.HasIndex("RecipeId1");
 
                     b.ToTable("RecipeStep");
                 });
@@ -335,21 +355,21 @@ namespace ITCanCook_DataAcecss.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "7f846f38-8958-4b0c-a025-1c21ae99a298",
+                            Id = "77599a0d-d8fc-430c-93d9-d35e3359fca4",
                             ConcurrencyStamp = "1",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
-                            Id = "98357b21-c3fd-4630-b140-fe191b72e4e5",
+                            Id = "aec7f97d-aad7-4535-8572-e364659348c0",
                             ConcurrencyStamp = "2",
                             Name = "Chef",
                             NormalizedName = "Chef"
                         },
                         new
                         {
-                            Id = "d51e927d-9140-478a-9ba0-93d28ca6b5fc",
+                            Id = "f4acd1c0-02e4-48b8-99a7-ee16cb6cf126",
                             ConcurrencyStamp = "3",
                             Name = "User",
                             NormalizedName = "User"
@@ -476,19 +496,19 @@ namespace ITCanCook_DataAcecss.Migrations
             modelBuilder.Entity("ITCanCook_DataAcecss.Entities.Recipe", b =>
                 {
                     b.HasOne("ITCanCook_DataAcecss.Entities.CookingMethod", "CookingMethod")
-                        .WithMany("Recipes")
+                        .WithMany()
                         .HasForeignKey("CookingMethodId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ITCanCook_DataAcecss.Entities.RecipeCategory", "RecipeCategory")
-                        .WithMany("Recipes")
+                        .WithMany()
                         .HasForeignKey("RecipeCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ITCanCook_DataAcecss.Entities.RecipeStyle", "RecipeStyle")
-                        .WithMany("Recipes")
+                        .WithMany()
                         .HasForeignKey("RecipeStyleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -502,17 +522,29 @@ namespace ITCanCook_DataAcecss.Migrations
 
             modelBuilder.Entity("ITCanCook_DataAcecss.Entities.RecipeAmount", b =>
                 {
+                    b.HasOne("ITCanCook_DataAcecss.Entities.CookingMethod", null)
+                        .WithMany("Recipes")
+                        .HasForeignKey("CookingMethodId");
+
                     b.HasOne("ITCanCook_DataAcecss.Entities.Ingredient", "Ingredient")
-                        .WithMany()
+                        .WithMany("Amounts")
                         .HasForeignKey("IngredientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("ITCanCook_DataAcecss.Entities.RecipeCategory", null)
+                        .WithMany("Recipes")
+                        .HasForeignKey("RecipeCategoryId");
 
                     b.HasOne("ITCanCook_DataAcecss.Entities.Recipe", "Recipe")
                         .WithMany("Amounts")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("ITCanCook_DataAcecss.Entities.RecipeStyle", null)
+                        .WithMany("Recipes")
+                        .HasForeignKey("RecipeStyleId");
 
                     b.Navigation("Ingredient");
 
@@ -521,11 +553,15 @@ namespace ITCanCook_DataAcecss.Migrations
 
             modelBuilder.Entity("ITCanCook_DataAcecss.Entities.RecipeStep", b =>
                 {
-                    b.HasOne("ITCanCook_DataAcecss.Entities.Recipe", "Recipe")
-                        .WithMany("Steps")
+                    b.HasOne("ITCanCook_DataAcecss.Entities.RecipeAmount", "Recipe")
+                        .WithMany()
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("ITCanCook_DataAcecss.Entities.Recipe", null)
+                        .WithMany("Steps")
+                        .HasForeignKey("RecipeId1");
 
                     b.Navigation("Recipe");
                 });
@@ -584,6 +620,11 @@ namespace ITCanCook_DataAcecss.Migrations
             modelBuilder.Entity("ITCanCook_DataAcecss.Entities.CookingMethod", b =>
                 {
                     b.Navigation("Recipes");
+                });
+
+            modelBuilder.Entity("ITCanCook_DataAcecss.Entities.Ingredient", b =>
+                {
+                    b.Navigation("Amounts");
                 });
 
             modelBuilder.Entity("ITCanCook_DataAcecss.Entities.IngredientCategory", b =>
