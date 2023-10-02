@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ITCanCook_DataAcecss.Enum
+namespace ITCanCook_DataAcecss.UnitOfWork
 {
-	public enum Role
+	public interface IUnitOfWork
 	{
-		ADMIN,
-		CHEF,
-		CUSTOMER
+		bool Commit();
+		Task<bool> CommitAsync();
 	}
 }
