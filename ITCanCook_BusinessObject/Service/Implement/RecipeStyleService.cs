@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ITCanCook_BusinessObject.Service
+namespace ITCanCook_BusinessObject.Service.Implement
 {
-    internal class RecipeCategoryService
+    internal class RecipeStyleService
     {
     }
 }

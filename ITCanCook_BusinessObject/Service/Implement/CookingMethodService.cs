@@ -1,23 +1,24 @@
-﻿using ITCanCook_DataAcecss.Entities;
-using ITCanCook_DataAcecss.Repository;
+﻿using ITCanCook_BusinessObject.Service.Interface;
+using ITCanCook_DataAcecss.Entities;
+using ITCanCook_DataAcecss.Repository.Implement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ITCanCook_BusinessObject.Service
+namespace ITCanCook_BusinessObject.Service.Implement
 {
-    public interface ICookingMethodService
-    {
-        public List<CookingMethod> GetCookingMethods();
-        public CookingMethod GetCookingMethodById(int id);
-        public bool CreateCookingMethod(CookingMethod method);
-        public bool UpdateCookingMethod(CookingMethod method);
-        public bool DeleteCookingMethodById(int id);
+    //public interface ICookingMethodService
+    //{
+    //    public List<CookingMethod> GetCookingMethods();
+    //    public CookingMethod GetCookingMethodById(int id);
+    //    public bool CreateCookingMethod(CookingMethod method);
+    //    public bool UpdateCookingMethod(CookingMethod method);
+    //    public bool DeleteCookingMethodById(int id);
 
-    }
-    public class CookingMethodService:ICookingMethodService
+    //}
+    public class CookingMethodService : ICookingMethodService
     {
         private readonly ICookingMethodRepo _repo;
         public CookingMethodService(ICookingMethodRepo repo)
@@ -57,7 +58,7 @@ namespace ITCanCook_BusinessObject.Service
         public bool DeleteCookingMethodById(int id)
         {
             var method = _repo.GetById(id);
-            if(method == null)
+            if (method == null)
             {
                 return false;
             }

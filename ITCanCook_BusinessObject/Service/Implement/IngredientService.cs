@@ -1,22 +1,16 @@
-﻿using ITCanCook_DataAcecss.Entities;
-using ITCanCook_DataAcecss.Repository;
+﻿using ITCanCook_BusinessObject.Service.Interface;
+using ITCanCook_DataAcecss.Entities;
+using ITCanCook_DataAcecss.Repository.Implement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ITCanCook_BusinessObject.Service
+namespace ITCanCook_BusinessObject.Service.Implement
 {
-    public interface IIngredientService
-    {
-        public List<Ingredient> GetIngredients();
-        public Ingredient GetIngredientById(int id);
-        public bool CreateIngredient(Ingredient ingredient);
-        public bool UpdateIngredient(Ingredient ingredient);
-        public bool DeleteIngredientById(int id);
-    }
-    internal class IngredientService : IIngredientService
+
+    public class IngredientService : IIngredientService
     {
         private readonly IIngredientRepo _repo;
         public IngredientService(IIngredientRepo repo)

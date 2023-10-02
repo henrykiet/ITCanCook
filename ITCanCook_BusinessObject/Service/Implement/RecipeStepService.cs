@@ -1,12 +1,12 @@
 ﻿using ITCanCook_DataAcecss.Entities;
-using ITCanCook_DataAcecss.Repository;
+using ITCanCook_DataAcecss.Repository.Implement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ITCanCook_BusinessObject.Service
+namespace ITCanCook_BusinessObject.Service.Implement
 {
     public interface IRecipeStepService
     {
@@ -16,7 +16,7 @@ namespace ITCanCook_BusinessObject.Service
         public bool UpdateRecipeStep(RecipeStep step);
         public bool DeleteRecipeStepById(int id);
     }
-    internal class RecipeStepService:IRecipeStepService
+    internal class RecipeStepService : IRecipeStepService
     {
         private readonly IRecipeStepRepo _repo;
 
@@ -27,7 +27,7 @@ namespace ITCanCook_BusinessObject.Service
 
         public bool CreateRecipeStep(RecipeStep step)
         {
-            
+
             return true;
         }
 

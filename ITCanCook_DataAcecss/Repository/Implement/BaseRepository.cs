@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ITCanCook_DataAcecss.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,18 +7,9 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ITCanCook_DataAcecss.Repository
+namespace ITCanCook_DataAcecss.Repository.Implement
 {
-    public interface IBaseRepository<T> where T : class
-    {
-        public T GetById<TKey>(TKey id);
-        public IQueryable<T> GetAll();
-        public void Create(T entity);
-        public void Update(T entity);
-        public void Delete(T entity);
-        public IQueryable<T> Get(Expression<Func<T,bool>> expression);
 
-    }
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
         private readonly DbContext _context;
@@ -25,7 +17,7 @@ namespace ITCanCook_DataAcecss.Repository
         public BaseRepository(DbContext context)
         {
             _context = context;
-            _dbSet = this._context.Set<T>();
+            _dbSet = _context.Set<T>();
         }
         public void Create(T entity)
         {
@@ -38,12 +30,12 @@ namespace ITCanCook_DataAcecss.Repository
 
         public IQueryable<T> GetAll()
         {
-            return this._dbSet;
+            return _dbSet;
         }
 
         public T GetById<TKey>(TKey id)
         {
-            return (T)_dbSet.Find(new object[1]{id});
+            return _dbSet.Find(new object[1] { id });
         }
 
         public void Update(T entity)

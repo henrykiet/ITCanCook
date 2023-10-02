@@ -1,22 +1,15 @@
-﻿using ITCanCook_DataAcecss.Entities;
-using ITCanCook_DataAcecss.Repository;
+﻿using ITCanCook_BusinessObject.Service.Interface;
+using ITCanCook_DataAcecss.Entities;
+using ITCanCook_DataAcecss.Repository.Implement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ITCanCook_BusinessObject.Service
+namespace ITCanCook_BusinessObject.Service.Implement
 {
-    public interface IIngredientCategoryService
-    {
-        public List<IngredientCategory> GetIngredientCategories();
-        public IngredientCategory GetIngredientCategoryById(int id);
-        public bool CreateIngredientCategory(IngredientCategory category);
-        public bool UpdateIngredientCategory(IngredientCategory category);
-        public bool DeleteIngredientCategoryById(int id);
-    }
-    internal class IngredientCategoryCategoryService:IIngredientCategoryService
+    public class IngredientCategoryCategoryService : IIngredientCategoryService
     {
         private readonly IIngredientCategoryRepo _repo;
         public IngredientCategoryCategoryService(IIngredientCategoryRepo repo)
@@ -52,7 +45,7 @@ namespace ITCanCook_BusinessObject.Service
 
         public bool UpdateIngredientCategory(IngredientCategory category)
         {
-            if(_repo.GetById(category.Id) != null)
+            if (_repo.GetById(category.Id) != null)
             {
                 return false;
             }

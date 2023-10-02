@@ -1,21 +1,15 @@
-﻿using ITCanCook_DataAcecss.Entities;
-using ITCanCook_DataAcecss.Repository;
+﻿using ITCanCook_BusinessObject.Service.Interface;
+using ITCanCook_DataAcecss.Entities;
+using ITCanCook_DataAcecss.Repository.Implement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ITCanCook_BusinessObject.Service
+namespace ITCanCook_BusinessObject.Service.Implement
 {
-    public interface IRecipeService
-    {
-        public List<Recipe> GetRecipies();
-        public Recipe GetRecipeById(int id);
-        public bool CreateRecipe(Recipe recipe);
-        public bool UpdateRecipe(Recipe recipe);
-        public bool DeleteRecipeById(int id);
-    }
+
     internal class RecipeService : IRecipeService
     {
         private readonly IRecipeRepo _repo;
@@ -26,7 +20,7 @@ namespace ITCanCook_BusinessObject.Service
 
         public bool CreateRecipe(Recipe recipe)
         {
-            if(_repo.GetById(recipe.Id) != null)
+            if (_repo.GetById(recipe.Id) != null)
             {
                 return false;
             }
