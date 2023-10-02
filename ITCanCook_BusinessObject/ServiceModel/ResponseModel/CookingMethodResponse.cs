@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ITCanCook_BusinessObject.ServiceModel.ResponseModel
 {
-    internal class CookingMethodResponse
+    public class CookingMethodResponse
     {
         public int Id { get; set; }
         public string Name { get; set; }

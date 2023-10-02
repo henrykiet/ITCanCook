@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ITCanCook_BusinessObject.ServiceModel.RequestModel
 {
-    internal class CookingMethodRequest
+    public class CookingMethodRequest
     {
         [Required]
         public int Id { get; set; }
