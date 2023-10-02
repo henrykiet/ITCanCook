@@ -12,7 +12,8 @@ namespace ITCanCook_DataAcecss.Entities
 	public class RecipeAmount
 	{
         [Key]
-        public int Id { get; set; }
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		public int Id { get; set; }
 
 
         [ForeignKey(nameof(Recipe))]
@@ -20,12 +21,10 @@ namespace ITCanCook_DataAcecss.Entities
 		[ForeignKey(nameof(Ingredient))]
 		public int IngredientId { get; set; }
 
-
 		public string Amount { get; set; }
 
 		public RecipeAmount Recipe { get; set; } 
 		public Ingredient Ingredient { get; set; }
-
 
 	}
 }
