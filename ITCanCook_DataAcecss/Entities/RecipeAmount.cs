@@ -23,7 +23,7 @@ namespace ITCanCook_DataAcecss.Entities
 
 		public string Amount { get; set; }
 
-		public Recipe Recipe { get; set; } 
+		public RecipeAmount Recipe { get; set; } 
 		public Ingredient Ingredient { get; set; }
 
 	}
