@@ -16,7 +16,7 @@ namespace ITCanCook_DataAcecss.Entities
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public CookingMethodStatus Status { get; set; }
-		public List<RecipeAmount> Recipes { get; set; }
+		public List<Recipe> Recipes { get; set; }
 
 	}
 }

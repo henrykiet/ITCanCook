@@ -19,6 +19,6 @@ namespace ITCanCook_DataAcecss.Entities
 		public int DisplayIndex { get; set; }
 		public RecipeCategoryStatus Status { get; set; }
 
-		public List<RecipeAmount> Recipes { get; set; }
+		public List<Recipe> Recipes { get; set; }
 	}
 }

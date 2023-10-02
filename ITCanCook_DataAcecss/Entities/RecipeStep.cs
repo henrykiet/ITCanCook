@@ -22,6 +22,6 @@ namespace ITCanCook_DataAcecss.Entities
 		public string MediaURl { get; set; }
 		public string? Description { get; set; }
 
-		public RecipeAmount Recipe { get; set; }
+		public Recipe Recipe { get; set; }
 	}
 }

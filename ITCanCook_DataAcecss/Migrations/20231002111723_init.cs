@@ -281,19 +281,11 @@ namespace ITCanCook_DataAcecss.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RecipeId = table.Column<int>(type: "int", nullable: false),
                     IngredientId = table.Column<int>(type: "int", nullable: false),
-                    Amount = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CookingMethodId = table.Column<int>(type: "int", nullable: true),
-                    RecipeCategoryId = table.Column<int>(type: "int", nullable: true),
-                    RecipeStyleId = table.Column<int>(type: "int", nullable: true)
+                    Amount = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RecipeAmount", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_RecipeAmount_cookingMethods_CookingMethodId",
-                        column: x => x.CookingMethodId,
-                        principalTable: "cookingMethods",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_RecipeAmount_Ingredient_IngredientId",
                         column: x => x.IngredientId,
@@ -306,16 +298,6 @@ namespace ITCanCook_DataAcecss.Migrations
                         principalTable: "Recipe",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_RecipeAmount_RecipeCategory_RecipeCategoryId",
-                        column: x => x.RecipeCategoryId,
-                        principalTable: "RecipeCategory",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_RecipeAmount_RecipeStyle_RecipeStyleId",
-                        column: x => x.RecipeStyleId,
-                        principalTable: "RecipeStyle",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -327,21 +309,15 @@ namespace ITCanCook_DataAcecss.Migrations
                     RecipeId = table.Column<int>(type: "int", nullable: false),
                     Index = table.Column<int>(type: "int", nullable: false),
                     MediaURl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RecipeId1 = table.Column<int>(type: "int", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RecipeStep", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RecipeStep_Recipe_RecipeId1",
-                        column: x => x.RecipeId1,
-                        principalTable: "Recipe",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_RecipeStep_RecipeAmount_RecipeId",
+                        name: "FK_RecipeStep_Recipe_RecipeId",
                         column: x => x.RecipeId,
-                        principalTable: "RecipeAmount",
+                        principalTable: "Recipe",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -349,17 +325,17 @@ namespace ITCanCook_DataAcecss.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "77599a0d-d8fc-430c-93d9-d35e3359fca4", "1", "Admin", "Admin" });
+                values: new object[] { "73635f97-d2bc-470e-a225-8f43fe8db948", "3", "User", "User" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "aec7f97d-aad7-4535-8572-e364659348c0", "2", "Chef", "Chef" });
+                values: new object[] { "84dacf6e-135e-48cd-91f3-710d9a4e5d8f", "2", "Chef", "Chef" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "f4acd1c0-02e4-48b8-99a7-ee16cb6cf126", "3", "User", "User" });
+                values: new object[] { "91ca4d03-f28c-4eb1-bf50-9738f9ee2de6", "1", "Admin", "Admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -421,19 +397,9 @@ namespace ITCanCook_DataAcecss.Migrations
                 column: "RecipeStyleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RecipeAmount_CookingMethodId",
-                table: "RecipeAmount",
-                column: "CookingMethodId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_RecipeAmount_IngredientId",
                 table: "RecipeAmount",
                 column: "IngredientId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RecipeAmount_RecipeCategoryId",
-                table: "RecipeAmount",
-                column: "RecipeCategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RecipeAmount_RecipeId",
@@ -441,19 +407,9 @@ namespace ITCanCook_DataAcecss.Migrations
                 column: "RecipeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RecipeAmount_RecipeStyleId",
-                table: "RecipeAmount",
-                column: "RecipeStyleId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_RecipeStep_RecipeId",
                 table: "RecipeStep",
                 column: "RecipeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RecipeStep_RecipeId1",
-                table: "RecipeStep",
-                column: "RecipeId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -474,6 +430,9 @@ namespace ITCanCook_DataAcecss.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "RecipeAmount");
+
+            migrationBuilder.DropTable(
                 name: "RecipeStep");
 
             migrationBuilder.DropTable(
@@ -481,9 +440,6 @@ namespace ITCanCook_DataAcecss.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "RecipeAmount");
 
             migrationBuilder.DropTable(
                 name: "Ingredient");
