@@ -18,11 +18,10 @@ namespace ITCanCook_DataAcecss.Entities
 		[ForeignKey(nameof(Recipe))]
 		public int RecipeId { get; set; }
 
-
 		public int Index { get; set; }
 		public string MediaURl { get; set; }
 		public string? Description { get; set; }
 
-		public Recipe Recipe { get; set; }
+		public RecipeAmount Recipe { get; set; }
 	}
 }
