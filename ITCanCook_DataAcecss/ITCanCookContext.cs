@@ -19,8 +19,13 @@ namespace ITCanCook_DataAcecss
             
         }
 
+//<<<<<<< HEAD
+//		#region
+//		public DbSet<RecipeAmount>? Recipes { get; set; }
+//=======
 		#region DBSet
 		public DbSet<Recipe>? Recipes { get; set; }
+//>>>>>>> main
 		public DbSet<RecipeAmount>? recipeAmounts { get; set; }
 		public DbSet<RecipeCategory>? recipeCategories { get; set; }
 		public DbSet<RecipeStep>? recipeSteps { get; set; }

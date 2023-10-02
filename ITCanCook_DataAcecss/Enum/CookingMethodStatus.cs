@@ -8,6 +8,7 @@ namespace ITCanCook_DataAcecss.Enum
 {
 	public enum CookingMethodStatus
 	{
-
+		Visible = 1,
+		Invisible = 0
 	}
 }
