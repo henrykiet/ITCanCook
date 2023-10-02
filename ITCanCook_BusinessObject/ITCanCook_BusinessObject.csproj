@@ -11,8 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Service\" />
-    <Folder Include="ServiceModel\" />
+    <Folder Include="ServiceModel\ResponseModel\" />
   </ItemGroup>
 
 </Project>
