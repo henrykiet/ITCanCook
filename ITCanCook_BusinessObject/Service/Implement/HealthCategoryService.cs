@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ITCanCook_DataAcecss.Enum
+namespace ITCanCook_BusinessObject.Service.Implement
 {
-	public enum RecipeStyleStatus
-	{
-	}
+    public class HealthCategoryService
+    {
+    }
 }

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using ITCanCook_DataAcecss.Entities;
-using ITCanCook_DataAcecss.Models;
 using ITCanCook_DataAcecss.Repository.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;

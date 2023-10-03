@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ITCanCook_BusinessObject.Service.Implement
+namespace ITCanCook_DataAcecss.Enum
 {
-    internal class RecipeStyleService
-    {
-    }
+	public enum Gender
+	{
+		Male,
+		Female,
+	}
 }

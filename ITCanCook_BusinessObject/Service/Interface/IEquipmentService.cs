@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace ITCanCook_BusinessObject.Service.Interface
 {
-    public interface IRecipeService
+    public interface IEquipmentService
     {
-        public List<Recipe> GetRecipies();
-        public Recipe GetRecipeById(int id);
-        public bool CreateRecipe(Recipe recipe);
-        public bool UpdateRecipe(Recipe recipe);
+        public List<Equipment> GetRecipies();
+        public Equipment GetRecipeById(int id);
+        public bool CreateRecipe(Equipment recipe);
+        public bool UpdateRecipe(Equipment recipe);
         public bool DeleteRecipeById(int id);
     }
 }

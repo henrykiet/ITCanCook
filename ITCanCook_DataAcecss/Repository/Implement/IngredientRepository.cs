@@ -13,7 +13,7 @@ namespace ITCanCook_DataAcecss.Repository.Implement
     {
 
     }
-    internal class IngredientRepository : BaseRepository<Ingredient>, IIngredientRepo
+    public class IngredientRepository : BaseRepository<Ingredient>, IIngredientRepo
     {
         public IngredientRepository(DbContext context) : base(context)
         {

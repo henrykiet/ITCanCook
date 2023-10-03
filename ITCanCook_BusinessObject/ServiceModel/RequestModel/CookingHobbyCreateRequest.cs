@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace ITCanCook_BusinessObject.ServiceModel.RequestModel
 {
-    public class CookingMethodCreateRequest
+    public class CookingHobbyCreateRequest
     {
-        public string Name { get; set; }
-        public CookingMethodStatus Status { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public CookingHobbyStatus Status { get; set; }
     }
 }

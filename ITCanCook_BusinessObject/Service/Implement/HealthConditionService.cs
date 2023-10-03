@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ITCanCook_DataAcecss.Enum
+namespace ITCanCook_BusinessObject.Service.Implement
 {
-	public enum CookingMethodStatus
-	{
-		Visible = 1,
-		Invisible = 0
-	}
+    public class HealthConditionService
+    {
+    }
 }

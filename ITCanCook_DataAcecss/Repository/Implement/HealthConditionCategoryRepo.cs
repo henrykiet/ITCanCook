@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace ITCanCook_DataAcecss.Repository.Implement
 {
-    public interface IRecipeStyleRepo : IBaseRepository<RecipeStyle>
-    {
+	public interface IHealthConditionCategoryRepo : IBaseRepository<HealthConditionCategory>
+	{
+	}
 
-    }
-    public class RecipeStyleRepository : BaseRepository<RecipeStyle>, IRecipeStyleRepo
-    {
-        public RecipeStyleRepository(DbContext context) : base(context)
-        {
-        }
-    }
+	public class HealthConditionCategoryRepo : BaseRepository<HealthConditionCategory>, IHealthConditionCategoryRepo
+	{
+		public HealthConditionCategoryRepo(DbContext context) : base(context)
+		{
+		}
+	}
 }

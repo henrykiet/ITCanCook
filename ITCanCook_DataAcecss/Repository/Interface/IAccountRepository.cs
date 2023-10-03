@@ -1,5 +1,4 @@
 ﻿using ITCanCook_DataAcecss.Entities;
-using ITCanCook_DataAcecss.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;

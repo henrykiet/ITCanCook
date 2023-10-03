@@ -1,9 +1,7 @@
-﻿using ITCanCook_BusinessObject.ServiceModel;
+﻿using ITCanCook_BusinessObject.Service.Interface;
+using ITCanCook_BusinessObject.ServiceModel;
 using ITCanCook_DataAcecss.Entities;
-using ITCanCook_DataAcecss.Models;
-using ITCanCook_DataAcecss.Repository.Interface;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -12,71 +10,67 @@ namespace ITCanCook.Controllers
 {
 	[Route("api/v1/accounts")]
 	[ApiController]
-	[Authorize(Roles = "Admin")]
+	//[Authorize]
 	public class AccountController : ControllerBase
 	{
-		private readonly IAccountRepository _accountRepository;
+		private readonly IAccountService _accountService;
 
-		public AccountController(IAccountRepository accountRepository)
+		public AccountController(IAccountService accountService)
 		{
-			_accountRepository = accountRepository;
+			_accountService = accountService;
 		}
-		[HttpGet]
-		public async Task<IActionResult> GetAllUsersAsync()
+
+		[HttpPut("UpdateProfile")]
+		//[Authorize(Roles = "CUSTOMER")]
+		public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfile accountModel)
 		{
-			var users = await _accountRepository.GetAllUsersAsync();
-			return Ok(users);
-		}
-		[HttpGet("{id}")]
-		public async Task<IActionResult> GetUserByIdAsync(Guid id)
-		{
-			var user = await _accountRepository.GetUserByIdAsync(id);
-			if (user == null)
+			var result = await _accountService.UpdateProfile(accountModel);
+			if (result)
 			{
-				return NotFound();
+				return new JsonResult(new
+				{
+					Message = "Cập nhật thông tin tài khoản thành công",
+					Status = 200
+				})
+				{
+					StatusCode = 200,
+				};
 			}
-
-			return Ok(user);
-		}
-
-		[HttpPost("CreateUser")]
-		public async Task<IActionResult> CreateUserAsync(ApplicationUser user)
-		{
-			await _accountRepository.CreateUserAsync(user);
-			return CreatedAtAction(nameof(GetUserByIdAsync), new { id = user.Id }, user);
-		}
-
-		[HttpPut("{id}")]
-		public async Task<IActionResult> UpdateUserAsync(Guid id, AccountModel user)
-		{
-			var existingUser = await _accountRepository.GetUserByIdAsync(id);
-			if (existingUser == null)
+			return new JsonResult(new
 			{
-				return NotFound();
-			}
-
-			// Cập nhật thông tin người dùng từ dữ liệu người dùng mới
-			existingUser.FirstName = user.FirstName;
-			existingUser.LastName = user.LastName;
-			existingUser.Email = user.Email;
-			existingUser.Dob = user.Dob;
-
-			await _accountRepository.UpdateUserAsync(existingUser);
-			return NoContent();
-		}
-
-		[HttpDelete("{id}")]
-		public async Task<IActionResult> DeleteUserAsync(Guid id)
-		{
-			var user = await _accountRepository.GetUserByIdAsync(id);
-			if (user == null)
+				Message = "Cập nhật thông tin tài khoản thất bại",
+				Status = 400
+			})
 			{
-				return NotFound();
-			}
-
-			await _accountRepository.DeleteUserAsync(user);
-			return NoContent();
+				StatusCode = 400,
+			};
 		}
 
+		//[HttpPut]
+		//[Route("password")]
+		////[Authorize(Roles = "CUSTOMER")]
+		//public IActionResult UpdatePassword([FromBody] UpdatePasswordModel updateModel)
+		//{
+		//	_accountService.Update(updateModel);
+		//	if (_unitOfWork.Commit())
+		//	{
+		//		return new JsonResult(new
+		//		{
+		//			Message = "Cập nhật mật khẩu thành công",
+		//			Status = 201
+		//		})
+		//		{
+		//			StatusCode = 201,
+		//		};
+		//	}
+		//	return new JsonResult(new
+		//	{
+		//		Message = "Cập nhật mật khẩu thất bại",
+		//		Status = 400
+		//	})
+		//	{
+		//		StatusCode = 400,
+		//	};
+		//}
 	}
 }
