@@ -10,11 +10,9 @@ namespace ITCanCook_BusinessObject.ServiceModel
 	public class AccountModel
 	{
 		[Required]
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 		[Required]
-		public string FirstName { get; set; }
-		[Required]
-		public string LastName { get; set; }
+		public string Name { get; set; } = string.Empty;
 		[Required]
 		public DateTime Dob { get; set; }
 	}

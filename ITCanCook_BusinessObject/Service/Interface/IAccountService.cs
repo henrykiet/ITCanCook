@@ -1,5 +1,6 @@
-﻿using ITCanCook_DataAcecss.Entities;
-using ITCanCook_DataAcecss.Models;
+﻿using ITCanCook_BusinessObject.ResponseObjects.Abstraction;
+using ITCanCook_BusinessObject.ServiceModel;
+using ITCanCook_DataAcecss.Entities;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -13,8 +14,17 @@ namespace ITCanCook_BusinessObject.Service.Interface
 {
 	public interface IAccountService
 	{
-		public Task<IdentityResult> SignUpAsync(RegisterAccountModel registerAccountModel, string role);
-		public Task<string> SignInAsync(LoginModel loginModel);
-		public Task<IdentityResult> ConfirmEmail(string token, string email);
+		Task<List<AccountModel>> GetAllUsersAsync();
+		Task<AccountModel?> GetUserByIdAsync(Guid id);
+		Task<string> CreateUserAsync(AccountModel user);
+		Task UpdateUserAsync(AccountModel user);
+		Task DeleteUserAsync(AccountModel user);
+		Task<ResponseObject> RegisterAccount(RegisterAccountModel account);
+		Task<ResponseObject> LoginAccount(LoginModel model);
+		Task<ResponseObject> ForgotPasswordAsync(ForgotPasswordModel model);
+		Task<ResponseObject> ResetPasswordAsync(ResetPasswordModel model);
+		Task<bool> UpdateProfile(UpdateProfile model);
+
+
 	}
 }

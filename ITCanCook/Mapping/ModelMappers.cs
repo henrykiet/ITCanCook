@@ -9,18 +9,21 @@ namespace ITCanCook.Mapping
     {
         public ModelMappers()
         {
-            #region Data <-> Request
-            CreateMap<CookingMethod, CookingMethodRequest>().ReverseMap();
-            CreateMap<CookingMethod, CookingMethodCreateRequest>().ReverseMap();
-            #endregion
+			#region Data <-> Request
+			CreateMap<CookingHobby, CookingHobbyRequest>().ReverseMap();
+			CreateMap<CookingHobby, CookingHobbyCreateRequest>().ReverseMap();
+			CreateMap<IngredientCategory, IngredientCategoryRequest>().ReverseMap();
+			CreateMap<IngredientCategory, IngredientCategoryCreateRequest>().ReverseMap();
+			#endregion
 
-            #region Data <-> response
-            CreateMap<CookingMethod, CookingMethodResponse>().ReverseMap();
-            #endregion
+			#region Data <-> response
+			CreateMap<CookingHobby, CookingHobbyResponse>().ReverseMap();
+			CreateMap<IngredientCategory, IngredientCategoryResponse>().ReverseMap();
+			#endregion
 
-            #region Request <-> Response
+			#region Request <-> Response
 
-            #endregion
-        }
-    }
+			#endregion
+		}
+	}
 }

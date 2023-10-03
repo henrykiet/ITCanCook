@@ -11,8 +11,8 @@ namespace ITCanCook_BusinessObject.Service.Interface
     {
         public List<RecipeStep> GetRecipeSteps();
         public RecipeStep GetRecipeStepById(int id);
-        public bool CreateRecipeStep(CookingMethod method);
-        public bool UpdateRecipeStep(CookingMethod method);
+        public bool CreateRecipeStep(CookingHobby method);
+        public bool UpdateRecipeStep(CookingHobby method);
         public bool DeleteRecipeStepById(int id);
     }
 }

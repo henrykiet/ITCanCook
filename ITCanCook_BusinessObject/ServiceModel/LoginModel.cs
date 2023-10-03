@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ITCanCook_DataAcecss.Models
+namespace ITCanCook_BusinessObject.ServiceModel
 {
 	public class LoginModel
 	{

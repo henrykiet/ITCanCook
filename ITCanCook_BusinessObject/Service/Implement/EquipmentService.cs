@@ -10,15 +10,15 @@ using System.Threading.Tasks;
 namespace ITCanCook_BusinessObject.Service.Implement
 {
 
-    internal class RecipeService : IRecipeService
+    internal class EquipmentService : IEquipmentService
     {
-        private readonly IRecipeRepo _repo;
-        public RecipeService(IRecipeRepo repo)
+        private readonly IEquipmentRepo _repo;
+        public EquipmentService(IEquipmentRepo repo)
         {
             _repo = repo;
         }
 
-        public bool CreateRecipe(Recipe recipe)
+        public bool CreateRecipe(Equipment recipe)
         {
             if (_repo.GetById(recipe.Id) != null)
             {
@@ -38,17 +38,17 @@ namespace ITCanCook_BusinessObject.Service.Implement
             return true;
         }
 
-        public Recipe GetRecipeById(int id)
+        public Equipment GetRecipeById(int id)
         {
             return _repo.GetById(id);
         }
 
-        public List<Recipe> GetRecipies()
+        public List<Equipment> GetRecipies()
         {
             return _repo.GetAll().ToList();
         }
 
-        public bool UpdateRecipe(Recipe recipe)
+        public bool UpdateRecipe(Equipment recipe)
         {
             if (_repo.GetById(recipe.Id) == null)
             {

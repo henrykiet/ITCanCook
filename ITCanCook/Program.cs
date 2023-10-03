@@ -13,12 +13,16 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 using ITCanCook_DataAcecss.Repository.Interface;
 using ITCanCook_DataAcecss.Repository.Implement;
+using ITCanCook_DataAcecss.UnitOfWork;
+using ITCanCook.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -89,12 +93,27 @@ builder.Services.AddSwaggerGen(options =>
 	});
 });
 
-builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-builder.Services.AddScoped<IEmailService, SendMail>();
 
+
+
+builder.Services.AddScoped<DbContext, ITCanCookContext>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IEmailService, SendMail>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+
+builder.Services.AddScoped<IBaseRepository<dynamic>, BaseRepository<dynamic>>();
+
+builder.Services.AddScoped<ICookingHobbyRepo, CookingHobbyRepository>();
+builder.Services.AddScoped<ICookingHobbyService, CookingHobbyService>();
+
+//builder.Services.AddScoped<IIngredientService, IngredientService>();
+//builder.Services.AddScoped<IIngredientCategoryRepo, IngredientCategoryRepository>();
 
 //đăng ký mapper
-builder.Services.AddAutoMapper(typeof(MapperProfile));
+builder.Services.AddAutoMapper(typeof(ModelMappers));
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

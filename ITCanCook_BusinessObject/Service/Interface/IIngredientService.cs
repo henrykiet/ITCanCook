@@ -11,8 +11,8 @@ namespace ITCanCook_BusinessObject.Service.Interface
     {
         public List<Ingredient> GetIngredients();
         public Ingredient GetIngredientById(int id);
-        public bool CreateIngredient(Ingredient ingredient);
-        public bool UpdateIngredient(Ingredient ingredient);
+        public string CreateIngredient(Ingredient ingredient);
+        public string UpdateIngredient(Ingredient ingredient);
         public bool DeleteIngredientById(int id);
     }
 }

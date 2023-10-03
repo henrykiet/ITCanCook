@@ -9,16 +9,15 @@ using System.Threading.Tasks;
 
 namespace ITCanCook_DataAcecss.Entities
 {
-	[Table("RecipeCategory")]
-	public class RecipeCategory
+	[Table("Equipment")]
+	public class Equipment
 	{
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
 		public string Name { get; set; }
-		public int DisplayIndex { get; set; }
-		public RecipeCategoryStatus Status { get; set; }
-
+        public bool IsEquipment { get; set; }
+        public EquipmentStatus Status { get; set; }
 		public List<Recipe> Recipes { get; set; }
+
 	}
 }

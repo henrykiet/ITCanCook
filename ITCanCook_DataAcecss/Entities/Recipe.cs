@@ -17,12 +17,12 @@ namespace ITCanCook_DataAcecss.Entities
 		public int Id { get; set; }
 
 
-		[ForeignKey(nameof(RecipeCategory))]
-		public int RecipeCategoryId { get; set; }
-		[ForeignKey(nameof(RecipeStyle))]
-		public int RecipeStyleId { get; set; }
-		[ForeignKey(nameof(CookingMethod))]
-		public int CookingMethodId { get; set; }
+		[ForeignKey(nameof(Equipment))]
+		public int EquipmentId { get; set; }
+		[ForeignKey(nameof(HealthCondition))]
+		public int HealthConditionId { get; set; }
+		[ForeignKey(nameof(CookingHobby))]
+		public int CookingHobbyId { get; set; }
 
 		public string ImgLink { get; set; }
 		public int CookingTime { get; set; }
@@ -34,9 +34,8 @@ namespace ITCanCook_DataAcecss.Entities
 		public List<RecipeAmount> Amounts { get; set; }
 
 
-		public RecipeCategory RecipeCategory { get; set; }
-		public RecipeStyle RecipeStyle { get; set; }
-		public CookingMethod CookingMethod { get; set; }
-
+		public HealthCondition HealthCondition { get; set; }
+		public Equipment Equipment { get; set; }
+		public CookingHobby CookingHobby { get; set; }
 	}
 }

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ITCanCook_DataAcecss.Migrations
 {
     [DbContext(typeof(ITCanCookContext))]
-    [Migration("20231002111723_init")]
+    [Migration("20231003095554_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,19 +48,21 @@ namespace ITCanCook_DataAcecss.Migrations
                     b.Property<int>("FailedLoginAttempts")
                         .HasColumnType("int");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<float>("Hight")
+                        .HasColumnType("real");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -92,6 +94,9 @@ namespace ITCanCook_DataAcecss.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<float>("Weight")
+                        .HasColumnType("real");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -105,13 +110,16 @@ namespace ITCanCook_DataAcecss.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("ITCanCook_DataAcecss.Entities.CookingMethod", b =>
+            modelBuilder.Entity("ITCanCook_DataAcecss.Entities.CookingHobby", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("IsHobby")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -122,7 +130,78 @@ namespace ITCanCook_DataAcecss.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("cookingMethods");
+                    b.ToTable("CookingHobby");
+                });
+
+            modelBuilder.Entity("ITCanCook_DataAcecss.Entities.Equipment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("IsEquipment")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Equipment");
+                });
+
+            modelBuilder.Entity("ITCanCook_DataAcecss.Entities.HealthCondition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("HealthConditionCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsHealthCondition")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HealthConditionCategoryId");
+
+                    b.ToTable("HealthCondition");
+                });
+
+            modelBuilder.Entity("ITCanCook_DataAcecss.Entities.HealthConditionCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("IndexDisplay")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HealthConditionCategories");
                 });
 
             modelBuilder.Entity("ITCanCook_DataAcecss.Entities.Ingredient", b =>
@@ -159,6 +238,12 @@ namespace ITCanCook_DataAcecss.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("IndexDisplay")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -176,7 +261,7 @@ namespace ITCanCook_DataAcecss.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CookingMethodId")
+                    b.Property<int>("CookingHobbyId")
                         .HasColumnType("int");
 
                     b.Property<int>("CookingTime")
@@ -185,26 +270,26 @@ namespace ITCanCook_DataAcecss.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("EquipmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HealthConditionId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ImgLink")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RecipeCategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RecipeStyleId")
-                        .HasColumnType("int");
 
                     b.Property<int>("ServingSize")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CookingMethodId");
+                    b.HasIndex("CookingHobbyId");
 
-                    b.HasIndex("RecipeCategoryId");
+                    b.HasIndex("EquipmentId");
 
-                    b.HasIndex("RecipeStyleId");
+                    b.HasIndex("HealthConditionId");
 
                     b.ToTable("Recipe");
                 });
@@ -236,29 +321,6 @@ namespace ITCanCook_DataAcecss.Migrations
                     b.ToTable("RecipeAmount");
                 });
 
-            modelBuilder.Entity("ITCanCook_DataAcecss.Entities.RecipeCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("DisplayIndex")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RecipeCategory");
-                });
-
             modelBuilder.Entity("ITCanCook_DataAcecss.Entities.RecipeStep", b =>
                 {
                     b.Property<int>("Id")
@@ -285,26 +347,6 @@ namespace ITCanCook_DataAcecss.Migrations
                     b.HasIndex("RecipeId");
 
                     b.ToTable("RecipeStep");
-                });
-
-            modelBuilder.Entity("ITCanCook_DataAcecss.Entities.RecipeStyle", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RecipeStyle");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -336,21 +378,21 @@ namespace ITCanCook_DataAcecss.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "91ca4d03-f28c-4eb1-bf50-9738f9ee2de6",
+                            Id = "6142de91-9094-4be6-a7e5-184b70b56605",
                             ConcurrencyStamp = "1",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
-                            Id = "84dacf6e-135e-48cd-91f3-710d9a4e5d8f",
+                            Id = "0b3f99a3-0df2-4bf2-bf1c-74f72048f492",
                             ConcurrencyStamp = "2",
                             Name = "Chef",
                             NormalizedName = "Chef"
                         },
                         new
                         {
-                            Id = "73635f97-d2bc-470e-a225-8f43fe8db948",
+                            Id = "fae585b2-eb7f-445e-b146-aec217850276",
                             ConcurrencyStamp = "3",
                             Name = "User",
                             NormalizedName = "User"
@@ -463,6 +505,17 @@ namespace ITCanCook_DataAcecss.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ITCanCook_DataAcecss.Entities.HealthCondition", b =>
+                {
+                    b.HasOne("ITCanCook_DataAcecss.Entities.HealthConditionCategory", "HealthConditionCategory")
+                        .WithMany()
+                        .HasForeignKey("HealthConditionCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HealthConditionCategory");
+                });
+
             modelBuilder.Entity("ITCanCook_DataAcecss.Entities.Ingredient", b =>
                 {
                     b.HasOne("ITCanCook_DataAcecss.Entities.IngredientCategory", "IngredientCategory")
@@ -476,29 +529,29 @@ namespace ITCanCook_DataAcecss.Migrations
 
             modelBuilder.Entity("ITCanCook_DataAcecss.Entities.Recipe", b =>
                 {
-                    b.HasOne("ITCanCook_DataAcecss.Entities.CookingMethod", "CookingMethod")
+                    b.HasOne("ITCanCook_DataAcecss.Entities.CookingHobby", "CookingHobby")
                         .WithMany("Recipes")
-                        .HasForeignKey("CookingMethodId")
+                        .HasForeignKey("CookingHobbyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ITCanCook_DataAcecss.Entities.RecipeCategory", "RecipeCategory")
+                    b.HasOne("ITCanCook_DataAcecss.Entities.Equipment", "Equipment")
                         .WithMany("Recipes")
-                        .HasForeignKey("RecipeCategoryId")
+                        .HasForeignKey("EquipmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ITCanCook_DataAcecss.Entities.RecipeStyle", "RecipeStyle")
+                    b.HasOne("ITCanCook_DataAcecss.Entities.HealthCondition", "HealthCondition")
                         .WithMany("Recipes")
-                        .HasForeignKey("RecipeStyleId")
+                        .HasForeignKey("HealthConditionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CookingMethod");
+                    b.Navigation("CookingHobby");
 
-                    b.Navigation("RecipeCategory");
+                    b.Navigation("Equipment");
 
-                    b.Navigation("RecipeStyle");
+                    b.Navigation("HealthCondition");
                 });
 
             modelBuilder.Entity("ITCanCook_DataAcecss.Entities.RecipeAmount", b =>
@@ -582,7 +635,17 @@ namespace ITCanCook_DataAcecss.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ITCanCook_DataAcecss.Entities.CookingMethod", b =>
+            modelBuilder.Entity("ITCanCook_DataAcecss.Entities.CookingHobby", b =>
+                {
+                    b.Navigation("Recipes");
+                });
+
+            modelBuilder.Entity("ITCanCook_DataAcecss.Entities.Equipment", b =>
+                {
+                    b.Navigation("Recipes");
+                });
+
+            modelBuilder.Entity("ITCanCook_DataAcecss.Entities.HealthCondition", b =>
                 {
                     b.Navigation("Recipes");
                 });
@@ -602,16 +665,6 @@ namespace ITCanCook_DataAcecss.Migrations
                     b.Navigation("Amounts");
 
                     b.Navigation("Steps");
-                });
-
-            modelBuilder.Entity("ITCanCook_DataAcecss.Entities.RecipeCategory", b =>
-                {
-                    b.Navigation("Recipes");
-                });
-
-            modelBuilder.Entity("ITCanCook_DataAcecss.Entities.RecipeStyle", b =>
-                {
-                    b.Navigation("Recipes");
                 });
 #pragma warning restore 612, 618
         }

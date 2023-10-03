@@ -10,10 +10,13 @@ namespace ITCanCook_DataAcecss.Entities
 {
     public class ApplicationUser : IdentityUser
     {
-        public string FirstName { get; set; }
-		public string LastName { get; set; }
+        public string Name { get; set; }
+		public Gender Gender { get; set; }
+        public float Hight { get; set; }
+        public float Weight { get; set; }
+        public DateTime Dob { get; set; }
         public string? ResetPasswordCode { get; set; }
         public int FailedLoginAttempts { get; set; }
-        public DateTime Dob { get; set; }
-    }
+
+	}
 }

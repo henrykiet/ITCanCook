@@ -14,13 +14,14 @@ public class ITCanCookContext : IdentityDbContext<ApplicationUser>
 	#region DBSet
 	public DbSet<Recipe>? Recipes { get; set; }
 	public DbSet<RecipeAmount>? recipeAmounts { get; set; }
-	public DbSet<RecipeCategory>? recipeCategories { get; set; }
+	public DbSet<HealthCondition>? recipeCategories { get; set; }
 	public DbSet<RecipeStep>? recipeSteps { get; set; }
-	public DbSet<RecipeStyle>? recipeStyles { get; set; }
-	public DbSet<CookingMethod>? cookingMethods { get; set; }
+	public DbSet<Equipment>? recipeStyles { get; set; }
 	public DbSet<Ingredient>? ingredients { get; set; }
 	public DbSet<IngredientCategory>? IngredientCategories { get; set; }
 	public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+	public DbSet<CookingHobby> CookingHobbies { get; set; }
+	public DbSet<HealthConditionCategory> HealthConditionCategories { get; set; }
 	#endregion
 
 

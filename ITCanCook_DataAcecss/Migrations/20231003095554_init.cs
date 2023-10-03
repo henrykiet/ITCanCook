@@ -28,11 +28,13 @@ namespace ITCanCook_DataAcecss.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: false),
+                    Hight = table.Column<float>(type: "real", nullable: false),
+                    Weight = table.Column<float>(type: "real", nullable: false),
+                    Dob = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ResetPasswordCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FailedLoginAttempts = table.Column<int>(type: "int", nullable: false),
-                    Dob = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -54,17 +56,47 @@ namespace ITCanCook_DataAcecss.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "cookingMethods",
+                name: "CookingHobby",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsHobby = table.Column<bool>(type: "bit", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_cookingMethods", x => x.Id);
+                    table.PrimaryKey("PK_CookingHobby", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Equipment",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsEquipment = table.Column<bool>(type: "bit", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Equipment", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HealthConditionCategories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IndexDisplay = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HealthConditionCategories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -73,40 +105,13 @@ namespace ITCanCook_DataAcecss.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IndexDisplay = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_IngredientCategory", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RecipeCategory",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DisplayIndex = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RecipeCategory", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RecipeStyle",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RecipeStyle", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -216,6 +221,28 @@ namespace ITCanCook_DataAcecss.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "HealthCondition",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HealthConditionCategoryId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsHealthCondition = table.Column<bool>(type: "bit", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HealthCondition", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_HealthCondition_HealthConditionCategories_HealthConditionCategoryId",
+                        column: x => x.HealthConditionCategoryId,
+                        principalTable: "HealthConditionCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Ingredient",
                 columns: table => new
                 {
@@ -242,9 +269,9 @@ namespace ITCanCook_DataAcecss.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RecipeCategoryId = table.Column<int>(type: "int", nullable: false),
-                    RecipeStyleId = table.Column<int>(type: "int", nullable: false),
-                    CookingMethodId = table.Column<int>(type: "int", nullable: false),
+                    EquipmentId = table.Column<int>(type: "int", nullable: false),
+                    HealthConditionId = table.Column<int>(type: "int", nullable: false),
+                    CookingHobbyId = table.Column<int>(type: "int", nullable: false),
                     ImgLink = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CookingTime = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -254,21 +281,21 @@ namespace ITCanCook_DataAcecss.Migrations
                 {
                     table.PrimaryKey("PK_Recipe", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Recipe_cookingMethods_CookingMethodId",
-                        column: x => x.CookingMethodId,
-                        principalTable: "cookingMethods",
+                        name: "FK_Recipe_CookingHobby_CookingHobbyId",
+                        column: x => x.CookingHobbyId,
+                        principalTable: "CookingHobby",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Recipe_RecipeCategory_RecipeCategoryId",
-                        column: x => x.RecipeCategoryId,
-                        principalTable: "RecipeCategory",
+                        name: "FK_Recipe_Equipment_EquipmentId",
+                        column: x => x.EquipmentId,
+                        principalTable: "Equipment",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Recipe_RecipeStyle_RecipeStyleId",
-                        column: x => x.RecipeStyleId,
-                        principalTable: "RecipeStyle",
+                        name: "FK_Recipe_HealthCondition_HealthConditionId",
+                        column: x => x.HealthConditionId,
+                        principalTable: "HealthCondition",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -325,17 +352,17 @@ namespace ITCanCook_DataAcecss.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "73635f97-d2bc-470e-a225-8f43fe8db948", "3", "User", "User" });
+                values: new object[] { "0b3f99a3-0df2-4bf2-bf1c-74f72048f492", "2", "Chef", "Chef" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "84dacf6e-135e-48cd-91f3-710d9a4e5d8f", "2", "Chef", "Chef" });
+                values: new object[] { "6142de91-9094-4be6-a7e5-184b70b56605", "1", "Admin", "Admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "91ca4d03-f28c-4eb1-bf50-9738f9ee2de6", "1", "Admin", "Admin" });
+                values: new object[] { "fae585b2-eb7f-445e-b146-aec217850276", "3", "User", "User" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -377,24 +404,29 @@ namespace ITCanCook_DataAcecss.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_HealthCondition_HealthConditionCategoryId",
+                table: "HealthCondition",
+                column: "HealthConditionCategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Ingredient_IngredientCategoryId",
                 table: "Ingredient",
                 column: "IngredientCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Recipe_CookingMethodId",
+                name: "IX_Recipe_CookingHobbyId",
                 table: "Recipe",
-                column: "CookingMethodId");
+                column: "CookingHobbyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Recipe_RecipeCategoryId",
+                name: "IX_Recipe_EquipmentId",
                 table: "Recipe",
-                column: "RecipeCategoryId");
+                column: "EquipmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Recipe_RecipeStyleId",
+                name: "IX_Recipe_HealthConditionId",
                 table: "Recipe",
-                column: "RecipeStyleId");
+                column: "HealthConditionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RecipeAmount_IngredientId",
@@ -451,13 +483,16 @@ namespace ITCanCook_DataAcecss.Migrations
                 name: "IngredientCategory");
 
             migrationBuilder.DropTable(
-                name: "cookingMethods");
+                name: "CookingHobby");
 
             migrationBuilder.DropTable(
-                name: "RecipeCategory");
+                name: "Equipment");
 
             migrationBuilder.DropTable(
-                name: "RecipeStyle");
+                name: "HealthCondition");
+
+            migrationBuilder.DropTable(
+                name: "HealthConditionCategories");
         }
     }
 }

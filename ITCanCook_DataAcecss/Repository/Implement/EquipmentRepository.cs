@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace ITCanCook_DataAcecss.Repository.Implement
 {
-    public interface IIngredientCategoryRepo : IBaseRepository<IngredientCategory>
+    public interface IEquipmentRepo : IBaseRepository<Equipment>
     {
 
     }
-    public class IngredientCategoryRepository : BaseRepository<IngredientCategory>, IIngredientCategoryRepo
-    {
-        public IngredientCategoryRepository(DbContext context) : base(context)
+    public class EquipmentRepository : BaseRepository<Equipment>, IEquipmentRepo
+	{
+        public EquipmentRepository(DbContext context) : base(context)
         {
         }
     }
