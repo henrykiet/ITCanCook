@@ -17,5 +17,6 @@ namespace ITCanCook_DataAcecss.Repository.Interface
 		Task CreateUserAsync(ApplicationUser user);
 		Task UpdateUserAsync(ApplicationUser user);
 		Task DeleteUserAsync(ApplicationUser user);
+		Task UpdateUserPremiumStatus(string userId);
 	}
 }

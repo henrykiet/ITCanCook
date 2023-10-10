@@ -52,6 +52,9 @@ namespace ITCanCook_DataAcecss.Migrations
                     b.Property<float>("Hight")
                         .HasColumnType("real");
 
+                    b.Property<bool>("IsPrenium")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -106,6 +109,31 @@ namespace ITCanCook_DataAcecss.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "b25d0bb6-1d52-4352-8d50-3f010c6b9c75",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "c9b04865-f549-45c5-94cc-2032e7916e92",
+                            Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = true,
+                            FailedLoginAttempts = 0,
+                            Gender = 0,
+                            Hight = 0f,
+                            IsPrenium = false,
+                            LockoutEnabled = true,
+                            Name = "admin",
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMF4zvECTVfsQN6Ry7r+Bf33r8vtPAYT0yiJra917A+6ctsVq7Dj08aqFFxtFLbIMQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "16ddd7e4-a04b-49f3-b921-f1d431c11ceb",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@gmail.com",
+                            Weight = 0f
+                        });
                 });
 
             modelBuilder.Entity("ITCanCook_DataAcecss.Entities.CookingHobby", b =>
@@ -265,6 +293,9 @@ namespace ITCanCook_DataAcecss.Migrations
                     b.Property<int>("CookingTime")
                         .HasColumnType("int");
 
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -277,6 +308,9 @@ namespace ITCanCook_DataAcecss.Migrations
                     b.Property<string>("ImgLink")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsHot")
+                        .HasColumnType("bit");
 
                     b.Property<int>("ServingSize")
                         .HasColumnType("int");
@@ -347,6 +381,45 @@ namespace ITCanCook_DataAcecss.Migrations
                     b.ToTable("RecipeStep");
                 });
 
+            modelBuilder.Entity("ITCanCook_DataAcecss.Entities.Transaction", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notice")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TransactionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TransactionId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TransactionType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Transactions");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -376,24 +449,24 @@ namespace ITCanCook_DataAcecss.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6142de91-9094-4be6-a7e5-184b70b56605",
-                            ConcurrencyStamp = "1",
+                            Id = "1",
+                            ConcurrencyStamp = "19b4d3dd-cc53-45c9-8e95-f87d031988e7",
                             Name = "Admin",
-                            NormalizedName = "Admin"
+                            NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "0b3f99a3-0df2-4bf2-bf1c-74f72048f492",
-                            ConcurrencyStamp = "2",
+                            Id = "2",
+                            ConcurrencyStamp = "5bd2e47f-e882-4fc1-9139-5d7c3db3f2a9",
                             Name = "Chef",
-                            NormalizedName = "Chef"
+                            NormalizedName = "CHEF"
                         },
                         new
                         {
-                            Id = "fae585b2-eb7f-445e-b146-aec217850276",
-                            ConcurrencyStamp = "3",
-                            Name = "User",
-                            NormalizedName = "User"
+                            Id = "3",
+                            ConcurrencyStamp = "4fcdbadd-8310-4f0e-8ece-b288e2b03c11",
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
                         });
                 });
 
@@ -482,6 +555,13 @@ namespace ITCanCook_DataAcecss.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "b25d0bb6-1d52-4352-8d50-3f010c6b9c75",
+                            RoleId = "1"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -582,6 +662,17 @@ namespace ITCanCook_DataAcecss.Migrations
                     b.Navigation("Recipe");
                 });
 
+            modelBuilder.Entity("ITCanCook_DataAcecss.Entities.Transaction", b =>
+                {
+                    b.HasOne("ITCanCook_DataAcecss.Entities.ApplicationUser", "ApplicationUser")
+                        .WithMany("Transactions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -631,6 +722,11 @@ namespace ITCanCook_DataAcecss.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ITCanCook_DataAcecss.Entities.ApplicationUser", b =>
+                {
+                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("ITCanCook_DataAcecss.Entities.CookingHobby", b =>

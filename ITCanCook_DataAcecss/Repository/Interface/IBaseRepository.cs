@@ -16,5 +16,12 @@ namespace ITCanCook_DataAcecss.Repository.Interface
         public void Delete(T entity);
         public IQueryable<T> Get(Expression<Func<T, bool>> expression);
 		public void DetachEntity(T entity);
+
+
+        public T GetByIdB(string id);
+        public T GetEntity(T entity);
+        public bool Insert(T entity);
+        public bool UpdateB(T entity);
+        public bool DeleteB(T entity);
 	}
 }

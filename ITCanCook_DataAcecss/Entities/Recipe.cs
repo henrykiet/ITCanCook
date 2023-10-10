@@ -28,6 +28,8 @@ namespace ITCanCook_DataAcecss.Entities
 		public int CookingTime { get; set; }
 		public string? Description { get; set; }
 		public int ServingSize { get; set; }
+        public int Count { get; set; }
+        public bool IsHot { get; set; }
 
 
 		public List<RecipeStep> Steps { get; set; }
