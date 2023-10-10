@@ -1,4 +1,6 @@
-﻿using ITCanCook_DataAcecss.Entities;
+﻿using ITCanCook_BusinessObject.ResponseObjects.Abstraction;
+using ITCanCook_BusinessObject.ServiceModel.RequestModel;
+using ITCanCook_DataAcecss.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +11,10 @@ namespace ITCanCook_BusinessObject.Service.Interface
 {
     public interface IEquipmentService
     {
-        public List<Equipment> GetRecipies();
-        public Equipment GetRecipeById(int id);
-        public bool CreateRecipe(Equipment recipe);
-        public bool UpdateRecipe(Equipment recipe);
-        public bool DeleteRecipeById(int id);
+        public List<Equipment> GetEquipments();
+        public Equipment GetEquipmentById(int id);
+        public ResponseObject CreateEquipment(EquipmentCreateRequest recipe);
+        public ResponseObject UpdateEquipment(EquipmentRequest recipe);
+        public ResponseObject DeleteEquipmentById(int id);
     }
 }

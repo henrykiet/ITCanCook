@@ -13,6 +13,6 @@ namespace ITCanCook_BusinessObject.ServiceModel.ResponseModel
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public CookingHobbyStatus Status { get; set; }
-        public List<Recipe> Recipes { get; set; } = new List<Recipe>();
+        //public List<Recipe> Recipes { get; set; } = new List<Recipe>();
     }
 }

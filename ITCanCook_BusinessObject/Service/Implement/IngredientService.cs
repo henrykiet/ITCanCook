@@ -1,4 +1,8 @@
-﻿using ITCanCook_BusinessObject.Service.Interface;
+﻿using AutoMapper;
+using ITCanCook_BusinessObject.ResponseObjects;
+using ITCanCook_BusinessObject.ResponseObjects.Abstraction;
+using ITCanCook_BusinessObject.Service.Interface;
+using ITCanCook_BusinessObject.ServiceModel.RequestModel;
 using ITCanCook_DataAcecss.Entities;
 using ITCanCook_DataAcecss.Repository.Implement;
 using System;
@@ -14,46 +18,59 @@ namespace ITCanCook_BusinessObject.Service.Implement
     {
 		private readonly IIngredientRepo _repo;
 		private readonly IIngredientCategoryRepo _categoryRepo;
-		public IngredientService(IIngredientRepo repo, IIngredientCategoryRepo categoryRepo)
+		private readonly IMapper _mapper;
+		public IngredientService(IIngredientRepo repo, IIngredientCategoryRepo categoryRepo, IMapper mapper)
 		{
 			_repo = repo;
 			_categoryRepo = categoryRepo;
+			_mapper = mapper;
 		}
 
-		public string CreateIngredient(Ingredient ingredient)
+		public ResponseObject CreateIngredient(IngredientCreateRequest ingredient)
 		{
-			//if (_repo.GetById(ingredient.Id) != null||
-			//    _repo.GetById(ingredient.IngredientCategoryId) == null||
-			//    string.IsNullOrWhiteSpace(ingredient.name))
-			//{
-			//    return false;
-			//}
-			//_repo.Create(ingredient);
-			//return true;
-			var t = ingredient;
-			if (_categoryRepo.GetById(t.IngredientCategoryId) == null)
+			var t = _repo.Get(i => i.name.Equals(ingredient)).FirstOrDefault();
+			var result = new PostRequestResponse();
+			if(t != null)
 			{
-				return "Category của ingredient không tồn tại";
-			}
-			if (string.IsNullOrWhiteSpace(t.name))
+                result.Status = 400;
+                result.Message = "Trùng tên với ingredient ID "+t.Id;
+				_repo.DetachEntity(t);
+                return result;
+            }
+			if (_categoryRepo.GetById(ingredient.IngredientCategoryId) == null)
 			{
-				return "Tên ingrident là chuỗi trống, nhập lại";
+                result.Status = 400;
+                result.Message = "Category của ingredient không tồn tại";
+                return result;
 			}
-			_repo.DetachEntity(t);
-			_repo.Create(ingredient);
-			return "Tạo thành công";
-		}
+			if (string.IsNullOrWhiteSpace(ingredient.name))
+			{
+                result.Status = 400;
+                result.Message = "Tên ingrident là chuỗi trống, nhập lại";
+                return result;
+			}
+            //_repo.DetachEntity(_mapper.Map<Ingredient>(t)); //đã sửa chỗ này
+			_repo.Create(_mapper.Map<Ingredient>(ingredient));
+            result.Status = 200;
+            result.Message = "OK";
+            return result;
+        }
 
-		public bool DeleteIngredientById(int id)
+		public ResponseObject DeleteIngredientById(int id)
 		{
+			var result = new PostRequestResponse();
 			var ingredient = _repo.GetById(id);
 			if (ingredient == null)
 			{
-				return false;
-			}
+                result.Status = 400;
+                result.Message = "Không tìm thấy";
+                return result;
+            }
 			_repo.Delete(ingredient);
-			return true;
-		}
+            result.Status = 200;
+            result.Message = "OK! Tạo thành công";
+            return result;
+        }
 
 		public Ingredient GetIngredientById(int id)
 		{
@@ -65,25 +82,41 @@ namespace ITCanCook_BusinessObject.Service.Implement
 			return _repo.GetAll().ToList();
 		}
 
-		public string UpdateIngredient(Ingredient ingredient)
+		public ResponseObject UpdateIngredient(IngredientRequest ingredient)
 		{
-
-			var t = ingredient;
+			var t = _repo.GetById(ingredient.Id);
+			var result = new PostRequestResponse();
 			if (_repo.GetById(t.Id) == null)
 			{
-				return "Id của ingredient không tồn tại!";
+                result.Status = 400;
+                result.Message = "Id của ingredient không tồn tại!";
+                return result;
 			}
-			if (_categoryRepo.GetById(t.IngredientCategoryId) == null)
+            _repo.DetachEntity(t);
+            if (_categoryRepo.GetById(t.IngredientCategoryId) == null)
 			{
-				return "Category của ingredient không tồn tại";
+                result.Status = 400;
+                result.Message = "Category của ingredient không tồn tại";
+                return result;
 			}
 			if (string.IsNullOrWhiteSpace(t.name))
 			{
-				return "Tên ingrident là chuỗi trống, nhập lại";
+                result.Status = 400;
+                result.Message = "Tên ingrident là chuỗi trống, nhập lại";
+                return result;
 			}
-			_repo.DetachEntity(t);
-			_repo.Update(ingredient);
-			return "Cập nhật thành công";
-		}
+			var t2 = _repo.Get(i => i.name.Equals(ingredient.name)).FirstOrDefault();
+			if (t2 != null && t2.Id != ingredient.Id)
+			{
+                result.Status = 400;
+                result.Message = "Trùng tên với ingredient id "+t2.Id;
+				_repo.DetachEntity(t2);
+                return result;
+            }
+			_repo.Update(_mapper.Map<Ingredient>(ingredient));
+            result.Status = 200;
+            result.Message = "OK! Tạo thành công";
+            return result;
+        }
 	}
 }

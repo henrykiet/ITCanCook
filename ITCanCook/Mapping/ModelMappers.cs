@@ -14,16 +14,37 @@ namespace ITCanCook.Mapping
 			CreateMap<CookingHobby, CookingHobbyCreateRequest>().ReverseMap();
 			CreateMap<IngredientCategory, IngredientCategoryRequest>().ReverseMap();
 			CreateMap<IngredientCategory, IngredientCategoryCreateRequest>().ReverseMap();
-			#endregion
+            CreateMap<Ingredient, IngredientRequest>().ReverseMap();
+            CreateMap<Ingredient, IngredientCreateRequest>().ReverseMap();
+            CreateMap<Equipment, EquipmentRequest>().ReverseMap();
+            CreateMap<Equipment, EquipmentCreateRequest>().ReverseMap();
+            CreateMap<HealthCondition, HealthConditionRequest>().ReverseMap();
+            CreateMap<HealthCondition, HealthConditionCreateRequest>().ReverseMap();
+            CreateMap<HealthConditionCategory, HealthConditionCategoryRequest>().ReverseMap();
+            CreateMap<HealthConditionCategory, HealthConditionCategoryCreateRequest>().ReverseMap();
+            CreateMap<RecipeAmount, RecipeAmountRequest>().ReverseMap();
+            CreateMap<RecipeAmount, RecipeAmountCreateRequest>().ReverseMap();
+            CreateMap<RecipeStep, RecipeStepRequest>().ReverseMap();
+            CreateMap<RecipeStep, RecipeCreateRequest>().ReverseMap();
+            CreateMap<Recipe, RecipeRequest>().ReverseMap();
+            CreateMap<Recipe, RecipeCreateRequest>().ReverseMap();
+            #endregion
 
-			#region Data <-> response
-			CreateMap<CookingHobby, CookingHobbyResponse>().ReverseMap();
+            #region Data <-> response
+            CreateMap<CookingHobby, CookingHobbyResponse>().ReverseMap();
 			CreateMap<IngredientCategory, IngredientCategoryResponse>().ReverseMap();
-			#endregion
+            CreateMap<Ingredient, IngredientResponse>().ReverseMap();
+            CreateMap<Equipment, EquipmentResponse>().ReverseMap();
+            CreateMap<HealthCondition, HealthConditionResponse>().ReverseMap();
+            CreateMap<HealthConditionCategory, HealthConditionCategoryResponse>().ReverseMap();
+            CreateMap<RecipeAmount, RecipeAmountResponse>().ReverseMap();
+            CreateMap<RecipeStep, RecipeStepResponse>().ReverseMap();
+            CreateMap<Recipe,RecipeResponse>().ReverseMap();
+            #endregion
 
-			#region Request <-> Response
+            #region Request <-> Response
 
-			#endregion
-		}
+            #endregion
+        }
 	}
 }

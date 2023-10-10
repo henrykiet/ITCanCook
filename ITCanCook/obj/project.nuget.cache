@@ -124,5 +124,12 @@
     "C:\\Users\\ACER\\.nuget\\packages\\twilio.aspnet.common\\8.0.2\\twilio.aspnet.common.8.0.2.nupkg.sha512",
     "C:\\Users\\ACER\\.nuget\\packages\\twilio.aspnet.core\\8.0.2\\twilio.aspnet.core.8.0.2.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\ACER\\Desktop\\ITCanCook\\ITCanCook\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

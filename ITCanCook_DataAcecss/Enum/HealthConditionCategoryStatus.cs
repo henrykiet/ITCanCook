@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace ITCanCook_DataAcecss.Enum
 {
-	public enum RecipeCategoryStatus
+	public enum HealthConditionCategoryStatus
 	{
-		
-	}
+        Visible = 1,
+        Invisible = 0
+    }
 }

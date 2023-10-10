@@ -17,11 +17,11 @@ namespace ITCanCook_DataAcecss.Entities
 		public int Id { get; set; }
 		[ForeignKey(nameof(HealthConditionCategory))]
 		public int HealthConditionCategoryId { get; set; }
-		public string Name { get; set; }
+		public string? Name { get; set; }
 		public bool IsHealthCondition { get; set; }
-		public RecipeCategoryStatus Status { get; set; }
+		public HealthConditionCategoryStatus Status { get; set; }
 
-		public List<Recipe> Recipes { get; set; }
+		public List<Recipe>? Recipes { get; set; }
 
 		public HealthConditionCategory HealthConditionCategory { get; set; }
 	}
