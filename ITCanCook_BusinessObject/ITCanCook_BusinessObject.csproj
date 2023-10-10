@@ -13,13 +13,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Service\Interface\2zfjzmzw.x51~" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ITCanCook_DataAcecss\ITCanCook_DataAcecss.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.7.0" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.7.0" />
     <PackageReference Include="NETCore.MailKit" Version="2.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="RestSharp" Version="110.2.0" />
   </ItemGroup>
 
 </Project>

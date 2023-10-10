@@ -1,0 +1,15 @@
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_BusinessObject\bin\Release\net6.0\ITCanCook_BusinessObject.deps.json
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_BusinessObject\bin\Release\net6.0\ITCanCook_BusinessObject.dll
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_BusinessObject\bin\Release\net6.0\ITCanCook_BusinessObject.pdb
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_BusinessObject\bin\Release\net6.0\ITCanCook_DataAcecss.dll
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_BusinessObject\bin\Release\net6.0\ITCanCook_DataAcecss.pdb
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_BusinessObject\obj\Release\net6.0\ITCanCook_BusinessObject.csproj.AssemblyReference.cache
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_BusinessObject\obj\Release\net6.0\ITCanCook_BusinessObject.GeneratedMSBuildEditorConfig.editorconfig
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_BusinessObject\obj\Release\net6.0\ITCanCook_BusinessObject.AssemblyInfoInputs.cache
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_BusinessObject\obj\Release\net6.0\ITCanCook_BusinessObject.AssemblyInfo.cs
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_BusinessObject\obj\Release\net6.0\ITCanCook_BusinessObject.csproj.CoreCompileInputs.cache
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_BusinessObject\obj\Release\net6.0\ITCanCook_BusinessObject.csproj.CopyComplete
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_BusinessObject\obj\Release\net6.0\ITCanCook_BusinessObject.dll
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_BusinessObject\obj\Release\net6.0\refint\ITCanCook_BusinessObject.dll
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_BusinessObject\obj\Release\net6.0\ITCanCook_BusinessObject.pdb
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_BusinessObject\obj\Release\net6.0\ref\ITCanCook_BusinessObject.dll

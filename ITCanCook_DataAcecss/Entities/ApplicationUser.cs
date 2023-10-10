@@ -15,8 +15,11 @@ namespace ITCanCook_DataAcecss.Entities
         public float Hight { get; set; }
         public float Weight { get; set; }
         public DateTime Dob { get; set; }
+        public bool IsPrenium { get; set; }
         public string? ResetPasswordCode { get; set; }
         public int FailedLoginAttempts { get; set; }
+
+        public List<Transaction> Transactions { get; set; }
 
 	}
 }
