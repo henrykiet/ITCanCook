@@ -113,9 +113,9 @@ namespace ITCanCook_DataAcecss.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b25d0bb6-1d52-4352-8d50-3f010c6b9c75",
+                            Id = "2b65dcb1-15f2-47d9-ab97-95f7b55cad06",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c9b04865-f549-45c5-94cc-2032e7916e92",
+                            ConcurrencyStamp = "6bb96560-b2ea-4e40-90fe-ee910463f1e7",
                             Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
@@ -127,9 +127,9 @@ namespace ITCanCook_DataAcecss.Migrations
                             Name = "admin",
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMF4zvECTVfsQN6Ry7r+Bf33r8vtPAYT0yiJra917A+6ctsVq7Dj08aqFFxtFLbIMQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEN8pVOJf1EykD4U9jy3ZbpGrDzX2zWoJYct2Ka5DV7eTvYCfcjvrnqV1K4psXiRFtA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "16ddd7e4-a04b-49f3-b921-f1d431c11ceb",
+                            SecurityStamp = "8b2bb9dc-22c4-45ec-839f-1bdde7de28c4",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com",
                             Weight = 0f
@@ -197,7 +197,6 @@ namespace ITCanCook_DataAcecss.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
@@ -293,11 +292,11 @@ namespace ITCanCook_DataAcecss.Migrations
                     b.Property<int>("CookingTime")
                         .HasColumnType("int");
 
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Energy")
+                        .HasColumnType("int");
 
                     b.Property<int>("EquipmentId")
                         .HasColumnType("int");
@@ -309,8 +308,13 @@ namespace ITCanCook_DataAcecss.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsHot")
-                        .HasColumnType("bit");
+                    b.Property<string>("Meals")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ServingSize")
                         .HasColumnType("int");
@@ -450,21 +454,21 @@ namespace ITCanCook_DataAcecss.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "19b4d3dd-cc53-45c9-8e95-f87d031988e7",
+                            ConcurrencyStamp = "896bccd4-678e-4116-8e10-5ddf506883b4",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "5bd2e47f-e882-4fc1-9139-5d7c3db3f2a9",
+                            ConcurrencyStamp = "65f7816c-1101-4648-9ed0-58aa621d8469",
                             Name = "Chef",
                             NormalizedName = "CHEF"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "4fcdbadd-8310-4f0e-8ece-b288e2b03c11",
+                            ConcurrencyStamp = "3241af2c-7e84-41c0-9864-e29e07252df8",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -559,7 +563,7 @@ namespace ITCanCook_DataAcecss.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "b25d0bb6-1d52-4352-8d50-3f010c6b9c75",
+                            UserId = "2b65dcb1-15f2-47d9-ab97-95f7b55cad06",
                             RoleId = "1"
                         });
                 });

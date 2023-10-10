@@ -8,5 +8,7 @@ namespace ITCanCook_DataAcecss.Enum
 {
 	public enum EquipmentStatus
 	{
-	}
+        Visible = 1,
+        Invisible = 0
+    }
 }

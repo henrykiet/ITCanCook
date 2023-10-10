@@ -1,0 +1,14 @@
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_DataAcecss\bin\Release\net6.0\ITCanCook_DataAcecss.deps.json
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_DataAcecss\bin\Release\net6.0\ITCanCook_DataAcecss.runtimeconfig.json
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_DataAcecss\bin\Release\net6.0\ITCanCook_DataAcecss.dll
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_DataAcecss\bin\Release\net6.0\ITCanCook_DataAcecss.pdb
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_DataAcecss\obj\Release\net6.0\ITCanCook_DataAcecss.csproj.AssemblyReference.cache
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_DataAcecss\obj\Release\net6.0\ITCanCook_DataAcecss.GeneratedMSBuildEditorConfig.editorconfig
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_DataAcecss\obj\Release\net6.0\ITCanCook_DataAcecss.AssemblyInfoInputs.cache
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_DataAcecss\obj\Release\net6.0\ITCanCook_DataAcecss.AssemblyInfo.cs
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_DataAcecss\obj\Release\net6.0\ITCanCook_DataAcecss.csproj.CoreCompileInputs.cache
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_DataAcecss\obj\Release\net6.0\ITCanCook_DataAcecss.dll
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_DataAcecss\obj\Release\net6.0\refint\ITCanCook_DataAcecss.dll
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_DataAcecss\obj\Release\net6.0\ITCanCook_DataAcecss.pdb
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_DataAcecss\obj\Release\net6.0\ITCanCook_DataAcecss.genruntimeconfig.cache
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_DataAcecss\obj\Release\net6.0\ref\ITCanCook_DataAcecss.dll
