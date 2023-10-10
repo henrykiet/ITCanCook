@@ -17,7 +17,7 @@ namespace ITCanCook_BusinessObject.Service.Implement
 			try
 			{
 				MailMessage msg = new MailMessage();
-				msg.From = new MailAddress(ConstanHelper.emailSender);
+				msg.From = new MailAddress(ConstanHelper.emailSender, "ITCanCook");
 				msg.To.Add(to);
 				msg.Subject = subject;
 				msg.IsBodyHtml = true;

@@ -2,7 +2,7 @@
 using ITCanCook_BusinessObject.ResponseObjects.Abstraction;
 using ITCanCook_BusinessObject.Service.Implement;
 using ITCanCook_BusinessObject.Service.Interface;
-using ITCanCook_BusinessObject.ServiceModel;
+using ITCanCook_BusinessObject.ServiceModel.RequestModel;
 using ITCanCook_DataAcecss.Entities;
 using ITCanCook_DataAcecss.UnitOfWork;
 using Microsoft.AspNetCore.Authorization;
@@ -17,7 +17,7 @@ using System.Text;
 
 namespace ITCanCook.Controllers
 {
-	[Route("api/v1/auth")]
+    [Route("api/v1/auth")]
 	[ApiController]
 	public class AuthController : ControllerBase
 	{
@@ -25,8 +25,13 @@ namespace ITCanCook.Controllers
 		private readonly IEmailService _emailService;
 		private readonly RoleManager<IdentityRole> _roleManager;
 		private readonly SignInManager<ApplicationUser> _signInManager;
-		private readonly IConfiguration _configuration;
+		private  IConfiguration _configuration;
 		private readonly IAccountService _accountService;
+
+		//private  string? accountSid = "";
+		//private  string? authToken = "";
+		//private  string? phone = "";
+
 		public AuthController(UserManager<ApplicationUser> userManager, IEmailService emailService,
 			RoleManager<IdentityRole> roleManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration,
 			IAccountService accountService)
@@ -79,8 +84,8 @@ namespace ITCanCook.Controllers
 			};
 			return jsonResult;
 		}
-
-		private async Task<IActionResult> ConfirmEmail(string token, string email)
+		[HttpGet("ConfirmEmail")]
+		public async Task<IActionResult> ConfirmEmail(string token, string email)
 		{
 			var user = await _userManager.FindByEmailAsync(email);
 			if (user != null)
@@ -126,6 +131,21 @@ namespace ITCanCook.Controllers
 			};
 			return jsonResult;
 		}
+
+		[HttpPost("Logout")]
+		[Authorize] // Yêu cầu người dùng phải đã đăng nhập để thực hiện đăng xuất
+		public async Task<IActionResult> Logout()
+		{
+			var result = await _accountService.Logout();
+			var statusCode = (int)result.Status;
+			var jsonResult = new JsonResult(result)
+			{
+				StatusCode = statusCode
+			};
+			return jsonResult;
+		}
+
+
 
 	}
 }

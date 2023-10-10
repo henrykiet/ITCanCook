@@ -1,7 +1,6 @@
 ﻿using ITCanCook_BusinessObject.ResponseObjects;
 using ITCanCook_BusinessObject.ResponseObjects.Abstraction;
 using ITCanCook_BusinessObject.Service.Interface;
-using ITCanCook_BusinessObject.ServiceModel;
 using ITCanCook_DataAcecss.Entities;
 using ITCanCook_DataAcecss.Repository.Interface;
 using Microsoft.AspNetCore.Http;
@@ -19,38 +18,43 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Data;
+using ITCanCook_BusinessObject.ServiceModel.RequestModel;
 
 namespace ITCanCook_BusinessObject.Service.Implement
 {
-	public class AccountService : IAccountService
+    public class AccountService : IAccountService
 	{
 		private readonly IAccountRepository _accountRepository;
 		private readonly UserManager<ApplicationUser> _userManager;
-		private readonly IEmailService _emailService;
 		private readonly RoleManager<IdentityRole> _roleManager;
 		private readonly SignInManager<ApplicationUser> _signInManager;
 		private readonly IConfiguration _configuration;
 		public AccountService(IAccountRepository accountRepository, UserManager<ApplicationUser> userManager,
-			IEmailService emailService, RoleManager<IdentityRole> roleManager,
+			RoleManager<IdentityRole> roleManager,
 			SignInManager<ApplicationUser> signInManager, IConfiguration configuration)
 		{
 			_accountRepository = accountRepository;
 			_userManager = userManager;
-			_emailService = emailService;
 			_roleManager = roleManager;
 			_signInManager = signInManager;
 			_configuration = configuration;
 		}
-
+		#region Quản lý User
 		public async Task<List<AccountModel>> GetAllUsersAsync()
 		{
 			// Sử dụng _accountRepository để lấy danh sách người dùng và chuyển đổi thành AccountModel
 			var users = await _accountRepository.GetAllUsersAsync();
 			return users.ConvertAll(user => new AccountModel
 			{
+				Id = user.Id,
 				Email = user.Email,
-				
-				Dob = user.Dob
+				Name = user.Name,
+				Gender = user.Gender,
+				Hight = user.Hight,
+				Weight = user.Weight,
+				Dob = user.Dob,
+				Phone = user.PhoneNumber,
 			});
 		}
 
@@ -65,59 +69,236 @@ namespace ITCanCook_BusinessObject.Service.Implement
 
 			return new AccountModel
 			{
-				Email = user.Email,
-				Name = user.Name,
-				Dob = user.Dob
-			};
-		}
-
-		public async Task<string> CreateUserAsync(AccountModel user)
-		{
-			// Chuyển đổi từ AccountModel thành ApplicationUser (nếu cần)
-			var applicationUser = new ApplicationUser
-			{
+				Id = user.Id,
 				Email = user.Email,
 				Name = user.Name,
 				Dob = user.Dob,
-				EmailConfirmed = true,
+				Gender = user.Gender,
+				Hight = user.Hight,
+				Phone = user.PhoneNumber,
+				Weight = user.Weight,
+
 			};
-
-			// Sử dụng _accountRepository để tạo người dùng
-			await _accountRepository.CreateUserAsync(applicationUser);
-			return applicationUser.Id;
 		}
-
-		public async Task UpdateUserAsync(AccountModel user)
+		public async Task<AccountModel?> GetUserByEmailAsync(string email)
 		{
-			// Chuyển đổi từ AccountModel thành ApplicationUser (nếu cần)
-			var applicationUser = new ApplicationUser
+			// Sử dụng UserManager để tìm người dùng theo email
+			var user = await _userManager.FindByEmailAsync(email);
+			if (user == null)
 			{
+				return null;
+			}
+
+			// Chuyển đổi thành AccountModel và trả về
+			return new AccountModel
+			{
+				Id = user.Id,
 				Email = user.Email,
-				Name= user.Name,
+				Name = user.Name,
 				Dob = user.Dob,
+				Gender = user.Gender,
+				Hight = user.Hight,
+				Phone = user.PhoneNumber,
+				Weight = user.Weight
 			};
-
-			// Sử dụng _accountRepository để cập nhật người dùng
-			await _accountRepository.UpdateUserAsync(applicationUser);
 		}
-
-		public async Task DeleteUserAsync(AccountModel user)
+	
+			public async Task<string> CreateUserAsync(CreateUserModel user)
 		{
-			// Chuyển đổi từ AccountModel thành ApplicationUser (nếu cần)
+			// Kiểm tra xem email đã tồn tại hay chưa
+			var existingUser = await _userManager.FindByEmailAsync(user.Email);
+			if (existingUser != null)
+			{
+				// Email đã tồn tại, bạn có thể xử lý lỗi ở đây nếu cần
+				return "Email đã tồn tại!";
+			}
+			// Chuyển đổi từ CreateUserModel thành ApplicationUser (nếu cần)
 			var applicationUser = new ApplicationUser
 			{
 				Email = user.Email,
 				Name = user.Name,
-				Dob = user.Dob
+				EmailConfirmed = false,
+				UserName = user.Email,
 			};
 
-			// Sử dụng _accountRepository để xóa người dùng
-			await _accountRepository.DeleteUserAsync(applicationUser);
+			var resultCreate = await _userManager.CreateAsync(applicationUser);
+
+			if (resultCreate.Succeeded)
+			{
+
+				// Đặt mật khẩu mặc định cho người dùng
+				var defaultPassword = "Abc123@"; //(hoặc bất kỳ mật khẩu nào bạn muốn)
+				await _userManager.AddPasswordAsync(applicationUser, defaultPassword);
+
+				// Gán vai trò cho người dùng
+				await _userManager.AddToRoleAsync(applicationUser, "User");
+
+				// Tìm người dùng theo email
+				var createdUser = await _userManager.FindByEmailAsync(user.Email);
+
+				if (createdUser != null)
+				{
+					// Lấy ID của người dùng và trả về
+					var userId = createdUser.Id;
+					return userId;
+				}
+			}
+
+			// Xử lý các lỗi tạo người dùng nếu cần
+			return "";
 		}
+
+
+		public async Task<ResponseObject> UpdateUserAsync(UpdateAccountModel user, string id)
+		{
+			var result = new ResponseObject();
+
+			try
+			{
+				var existingUser = await _userManager.FindByIdAsync(id);
+
+				if (existingUser == null)
+				{
+					result.Status = 404; // Không tìm thấy người dùng
+					result.Message = "Người dùng không tồn tại!";
+				}
+				else
+				{
+					// Cập nhật thông tin của người dùng từ model
+					existingUser.Email = user.Email;
+					existingUser.Name = user.Name;
+					existingUser.Dob = user.Dob;
+					existingUser.Hight = user.Hight;
+					existingUser.Gender = user.Gender;
+					existingUser.Weight = user.Weight;
+					existingUser.PhoneNumber = user.Phone;
+
+					var updateResult = await _userManager.UpdateAsync(existingUser);
+
+					if (updateResult.Succeeded)
+					{
+						result.Status = 200;
+						result.Message = "Cập nhật người dùng thành công";
+					}
+					else
+					{
+						result.Status = 400; // Lỗi yêu cầu không hợp lệ
+						result.Message = "Cập nhật người dùng thất bại!";
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				result.Status = 500; // Lỗi server
+				result.Message = $"Lỗi trong quá trình cập nhật người dùng: {ex.Message}";
+			}
+
+			return result;
+		}
+
+
+		public async Task<ResponseObject> DeleteUserAsync(string userId)
+		{
+			var result = new ResponseObject();
+
+			try
+			{
+				var user = await _userManager.FindByIdAsync(userId);
+
+				if (user == null)
+				{
+					result.Status = 404; // Không tìm thấy người dùng
+					result.Message = "Người dùng không tồn tại!";
+				}
+				else
+				{
+					var deleteResult = await _userManager.DeleteAsync(user);
+
+					if (deleteResult.Succeeded)
+					{
+						result.Status = 200;
+						result.Message = "Xóa người dùng thành công";
+					}
+					else
+					{
+						result.Status = 400; // Lỗi yêu cầu không hợp lệ
+						result.Message = "Xóa người dùng thất bại!";
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				result.Status = 500; // Lỗi server
+				result.Message = $"Lỗi trong quá trình xóa người dùng: {ex.Message}";
+			}
+
+			return result;
+		}
+		
+		public async Task<ResponseObject> UpdateUserRoleAsync(string userId, List<string> roles)
+		{
+			var result = new ResponseObject();
+
+			try
+			{
+				// Tìm người dùng bằng ID
+				var user = await _userManager.FindByIdAsync(userId);
+
+				if (user == null)
+				{
+					result.Status = 404; // Không tìm thấy người dùng
+					result.Message = "Người dùng không tồn tại!";
+				}
+				else
+				{
+					// Lấy danh sách vai trò hiện tại của người dùng
+					var userRoles = await _userManager.GetRolesAsync(user);
+
+					// Loại bỏ người dùng khỏi các vai trò hiện tại (nếu có)
+					await _userManager.RemoveFromRolesAsync(user, userRoles);
+
+					// Thêm người dùng vào các vai trò mới
+					var addResult = await _userManager.AddToRolesAsync(user, roles);
+
+					if (addResult.Succeeded)
+					{
+						result.Status = 200;
+						result.Message = "Cập nhật vai trò người dùng thành công";
+					}
+					else
+					{
+						result.Status = 400; // Lỗi yêu cầu không hợp lệ
+						result.Message = "Cập nhật vai trò người dùng thất bại!";
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				result.Status = 500; // Lỗi server
+				result.Message = $"Lỗi trong quá trình cập nhật vai trò người dùng: {ex.Message}";
+			}
+
+			return result;
+		}
+		#endregion
 		#region đăng ký 
 		public async Task<ResponseObject> RegisterAccount(RegisterAccountModel model)
 		{
 			var result = new PostRequestResponse();
+			//check validate
+			if (string.IsNullOrWhiteSpace(model.Name))
+			{
+				result.Status = 400;
+				result.Message = "Tên không được để trống!";
+				return result;
+			}
+			if (model.Dob.Year >= 2016)
+			{
+				result.Status = 400;
+				result.Message = "Ngày tháng năm sinh phải trước năm 2016!";
+				return result;
+			}
+
 			//check confirm password
 			if (!string.Equals(model.ConfirmPassword, model.Password))
 			{
@@ -125,7 +306,7 @@ namespace ITCanCook_BusinessObject.Service.Implement
 				result.Message = "Mật khẩu xác nhận không chính xác!";
 				return result;
 			}
-			if (await _roleManager.RoleExistsAsync("User"))
+			if (await _roleManager.RoleExistsAsync("Customer"))
 			{
 				// Check if user exists
 				var userExist = await _userManager.FindByEmailAsync(model.Email);
@@ -142,22 +323,28 @@ namespace ITCanCook_BusinessObject.Service.Implement
 					Name = model.Name,
 					UserName = model.Email,
 					Dob = model.Dob,
+					Gender = model.Gender,
+					Hight = 0,
+					Weight = 0,
+					PhoneNumber = model.Phone,
 				};
 				var resultUser = await _userManager.CreateAsync(user, model.Password);
 				// Kiểm tra xem quá trình tạo người dùng có thành công không
 				if (resultUser.Succeeded)
 				{
 					// Gán vai trò "User" cho người dùng
-					await _userManager.AddToRoleAsync(user, "User");
+					await _userManager.AddToRoleAsync(user, "Customer");
 
 					//Success
 					result.Status = 200;
 					result.Message = "Đăng ký thành công, hãy kiểm tra mail của bạn";
+					return result;
 				}
 				else
 				{
 					result.Status = 400;
 					result.Message = "Tạo người dùng thất bại!";
+					return result;
 				}
 			}
 			else
@@ -178,6 +365,7 @@ namespace ITCanCook_BusinessObject.Service.Implement
 			{
 				result.Status = 400;
 				result.Message = "Email không tồn tại!";
+				return result;
 			}
 			else if (user != null)
 			{
@@ -208,7 +396,7 @@ namespace ITCanCook_BusinessObject.Service.Implement
 					var userRoles = await _userManager.GetRolesAsync(user);
 
 					// Mã xác thực người dùng
-					var authClaims = new List<Claim> 
+					var authClaims = new List<Claim>
 						{
 						new Claim(ClaimTypes.Email, model.Email),
 						new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
@@ -229,6 +417,7 @@ namespace ITCanCook_BusinessObject.Service.Implement
 					// Trả về mã JWT dưới dạng JSON
 					result.Status = 200;
 					result.Message = new JwtSecurityTokenHandler().WriteToken(token).ToString();
+					return result;
 				}
 				else if (resultLogin.IsLockedOut)
 				{
@@ -263,6 +452,70 @@ namespace ITCanCook_BusinessObject.Service.Implement
 			return result;
 		}
 		#endregion
+
+		#region đăng ký bằng SMS
+		public async Task<ResponseObject> RegisterAccount(RegisterWithPhoneModel model)
+		{
+			var result = new PostRequestResponse();
+
+			// Kiểm tra xem email đã tồn tại hay không
+			var existingUser = await _userManager.FindByEmailAsync(model.Email);
+			if (existingUser != null)
+			{
+				result.Status = 400;
+				result.Message = "Email đã tồn tại!";
+				return result;
+			}
+
+			// Tạo một đối tượng ApplicationUser từ thông tin trong model
+			var user = new ApplicationUser
+			{
+				Email = model.Email,
+				Name = model.Name,
+				UserName = model.Email,
+				PhoneNumber = model.Phone,
+				EmailConfirmed = false // Đặt email chưa xác nhận
+			};
+
+			// Tạo tài khoản với email và mật khẩu
+			var resultUser = await _userManager.CreateAsync(user, model.Password);
+
+			// Kiểm tra xem quá trình tạo tài khoản có thành công không
+			if (resultUser.Succeeded)
+			{
+				// Gán vai trò "User" cho người dùng
+				await _userManager.AddToRoleAsync(user, "User");
+
+				// Tạo mã xác nhận số điện thoại và gửi nó qua SMS
+				var phoneNumberToken = await _userManager.GenerateChangePhoneNumberTokenAsync(user, model.Phone);
+
+				// Gửi mã xác nhận qua SMS, bạn cần có một dịch vụ SMS hoặc sử dụng các công nghệ gửi SMS như Twilio
+				// Thay 'SendSmsCode' bằng hàm gửi mã xác nhận qua SMS của bạn
+				//var smsSent = await SendSmsCode(model.Phone, phoneNumberToken);
+
+				//if (smsSent)
+				//{
+				//	result.Status = 200;
+				//	result.Message = "Đăng ký thành công, mã xác nhận đã được gửi đến số điện thoại của bạn";
+				//}
+				//else
+				//{
+				//	result.Status = 500; // Lỗi server
+				//	result.Message = "Có lỗi trong quá trình gửi mã xác nhận qua SMS";
+				//}
+			}
+			else
+			{
+				result.Status = 400;
+				result.Message = "Tạo người dùng thất bại!";
+			}
+
+			return result;
+		}
+
+
+
+		#endregion
 		#region quên mật khẩu
 		public async Task<ResponseObject> ForgotPasswordAsync(ForgotPasswordModel model)
 		{
@@ -290,7 +543,7 @@ namespace ITCanCook_BusinessObject.Service.Implement
 		private string GenerateRandomCode(int length)
 		{
 			var random = new Random();
-			const string chars = "0123456789";
+			const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 			return new string(Enumerable.Repeat(chars, length)
 				.Select(s => s[random.Next(s.Length)]).ToArray());
 		}
@@ -337,25 +590,128 @@ namespace ITCanCook_BusinessObject.Service.Implement
 		}
 
 		#endregion
-
-		public async Task<bool> UpdateProfile(UpdateProfile model)
+		#region Cập nhập Tài khoản
+		public async Task<ResponseObject> UpdateProfile(UpdateProfile model)
 		{
-			var result = false;
+			var result = new PostRequestResponse();
+			//check validate
+			if (string.IsNullOrWhiteSpace(model.Name))
+			{
+				result.Status = 400;
+				result.Message = "Tên không được để trống và có khoảng trống!";
+				return result;
+			}
+			if (model.Dob.Year >= 2016)
+			{
+				result.Status = 400;
+				result.Message = "Ngày tháng năm sinh phải trước năm 2016!";
+				return result;
+			}
+			if (model.Hight <= 0 || model.Hight >= 300)
+			{
+				result.Status = 400;
+				result.Message = "Chiều cao phải lớn hơn 0 và bé hơn 300 cm!";
+				return result;
+			}
+
+			if (model.Weight <= 0 || model.Weight >= 200)
+			{
+				result.Status = 400;
+				result.Message = "Cân nặng phải lớn hơn 0 và bé hơn 200 kg!";
+				return result;
+			}
 			var account = await _accountRepository.GetUserByIdAsync(model.Id);
 			if (account != null)
 			{
 				// Cập nhật thông tin tài khoản
-				account.Id = model.Id.ToString();
+				account.Id = account.Id;
 				account.Dob = model.Dob;
-				account.Name = model.FirstName;
+				account.Name = model.Name;
+				account.Hight = model.Hight;
+				account.Weight = model.Weight;
+				account.Gender = model.Gender;
 
 				// Sử dụng _accountRepository để cập nhật người dùng
 				await _accountRepository.UpdateUserAsync(account);
 
-				result = true;
+				result.Status = 200;
+				result.Message = "Cập nhập người dùng thành công";
+				return result;
 			}
 			return result;
 		}
+
+		public async Task<ResponseObject> UpdatePassword(UpdatePasswordModel model)
+		{
+			var result = new PostRequestResponse();
+
+			// Tìm người dùng bằng ID
+			var user = await _userManager.FindByIdAsync(model.Id);
+
+			if (user == null)
+			{
+				result.Status = 400;
+				result.Message = "Người dùng không tồn tại!";
+				return result;
+			}
+
+			// Kiểm tra mật khẩu cũ
+			var isPasswordValid = await _userManager.CheckPasswordAsync(user, model.oldPassword);
+
+			if (!isPasswordValid)
+			{
+				result.Status = 400;
+				result.Message = "Mật khẩu cũ không chính xác!";
+				return result;
+			}
+
+			// Kiểm tra và đặt lại mật khẩu mới
+			if (!Equals(model.passwordConfirm, model.newPassword))
+			{
+				result.Status = 400;
+				result.Message = "Mật xác nhận không chính xác!";
+				return result;
+			}
+			var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+			var resetResult = await _userManager.ResetPasswordAsync(user, resetToken, model.newPassword);
+
+			if (resetResult.Succeeded)
+			{
+				result.Status = 200;
+				result.Message = "Mật khẩu đã được cập nhật";
+			}
+			else
+			{
+				result.Status = 400;
+				result.Message = "Cập nhật mật khẩu thất bại";
+			}
+
+			return result;
+		}
+		#endregion
+
+		public async Task<ResponseObject> Logout()
+		{
+			var result = new ResponseObject();
+
+			try
+			{
+				// Sử dụng _signInManager để đăng xuất người dùng
+				await _signInManager.SignOutAsync();
+
+				result.Status = 200;
+				result.Message = "Đăng xuất thành công";
+				return result;
+			}
+			catch (Exception ex)
+			{
+				result.Status = 500; // Lỗi server
+				result.Message = $"Lỗi trong quá trình đăng xuất: {ex.Message}";
+			}
+
+			return result;
+		}
+
 
 	}
 }

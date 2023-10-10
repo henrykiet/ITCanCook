@@ -54,5 +54,17 @@ namespace ITCanCook_DataAcecss.Repository.Implement
 			_context.ApplicationUsers.Remove(user);
 			await _context.SaveChangesAsync();
 		}
+		public async Task UpdateUserPremiumStatus(string userId)
+		{
+			// Tìm người dùng theo userId
+			var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+			if (user != null)
+			{
+				// Cập nhật trạng thái "IsPremium" thành true (hoặc false, tùy vào logic của bạn)
+				user.IsPrenium = true; // hoặc false
+				await _context.SaveChangesAsync();
+			}
+		}
 	}
 }
