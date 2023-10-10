@@ -1,4 +1,6 @@
-﻿using ITCanCook_DataAcecss.Entities;
+﻿using ITCanCook_BusinessObject.ResponseObjects.Abstraction;
+using ITCanCook_BusinessObject.ServiceModel.RequestModel;
+using ITCanCook_DataAcecss.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +13,8 @@ namespace ITCanCook_BusinessObject.Service.Interface
     {
         public List<Ingredient> GetIngredients();
         public Ingredient GetIngredientById(int id);
-        public string CreateIngredient(Ingredient ingredient);
-        public string UpdateIngredient(Ingredient ingredient);
-        public bool DeleteIngredientById(int id);
+        public ResponseObject CreateIngredient(IngredientCreateRequest ingredient);
+        public ResponseObject UpdateIngredient(IngredientRequest ingredient);
+        public ResponseObject DeleteIngredientById(int id);
     }
 }

@@ -268,6 +268,9 @@ namespace ITCanCook_DataAcecss.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Energy")
+                        .HasColumnType("int");
+
                     b.Property<int>("EquipmentId")
                         .HasColumnType("int");
 
@@ -275,6 +278,14 @@ namespace ITCanCook_DataAcecss.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ImgLink")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Meals")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -376,21 +387,21 @@ namespace ITCanCook_DataAcecss.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6142de91-9094-4be6-a7e5-184b70b56605",
+                            Id = "1cbf34e5-37df-4202-ab31-60eeacdf3283",
                             ConcurrencyStamp = "1",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
-                            Id = "0b3f99a3-0df2-4bf2-bf1c-74f72048f492",
+                            Id = "04e2da59-39f8-4ebd-ae49-36f5fb155ce3",
                             ConcurrencyStamp = "2",
                             Name = "Chef",
                             NormalizedName = "Chef"
                         },
                         new
                         {
-                            Id = "fae585b2-eb7f-445e-b146-aec217850276",
+                            Id = "7e775029-e28f-447c-a590-374bafb889f2",
                             ConcurrencyStamp = "3",
                             Name = "User",
                             NormalizedName = "User"

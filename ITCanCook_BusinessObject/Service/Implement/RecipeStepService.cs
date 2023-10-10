@@ -1,5 +1,11 @@
-﻿using ITCanCook_DataAcecss.Entities;
+﻿using AutoMapper;
+using ITCanCook_BusinessObject.ResponseObjects;
+using ITCanCook_BusinessObject.ResponseObjects.Abstraction;
+using ITCanCook_BusinessObject.Service.Interface;
+using ITCanCook_BusinessObject.ServiceModel.RequestModel;
+using ITCanCook_DataAcecss.Entities;
 using ITCanCook_DataAcecss.Repository.Implement;
+using Org.BouncyCastle.Bcpg.OpenPgp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,47 +14,92 @@ using System.Threading.Tasks;
 
 namespace ITCanCook_BusinessObject.Service.Implement
 {
-    public interface IRecipeStepService
-    {
-        public List<RecipeStep> GetRecipies();
-        public RecipeStep GetRecipeStepById(int id);
-        public bool CreateRecipeStep(RecipeStep step);
-        public bool UpdateRecipeStep(RecipeStep step);
-        public bool DeleteRecipeStepById(int id);
-    }
-    internal class RecipeStepService : IRecipeStepService
+    
+    public class RecipeStepService : IRecipeStepService
     {
         private readonly IRecipeStepRepo _repo;
+        private readonly IRecipeRepo _recipeRepo;
+        private readonly IMapper _mapper;
 
-        public RecipeStepService(IRecipeStepRepo repo)
+        public RecipeStepService(IRecipeStepRepo repo, IRecipeRepo recipeRepo, IMapper mapper)
         {
             _repo = repo;
+            _recipeRepo = recipeRepo;
+            _mapper = mapper;
         }
 
-        public bool CreateRecipeStep(RecipeStep step)
+        public ResponseObject CreateRecipeStep(RecipeStepCreateRequest step)
         {
-
-            return true;
+            var result = new PostRequestResponse();
+            if (_recipeRepo.GetById(step.RecipeId) == null)
+            {
+                result.Status = 400;
+                result.Message = "Bad request! Không có recipe tương ứng";
+                return result;
+            }
+            if (string.IsNullOrWhiteSpace(step.Description))
+            {
+                result.Status = 400;
+                result.Message = "Bad request! Chuỗi trống";
+                return result;
+            }
+            _repo.Create(_mapper.Map<RecipeStep>(step));
+            result.Status = 200;
+            result.Message = "OK!";
+            return result;
         }
 
-        public bool DeleteRecipeStepById(int id)
+        public ResponseObject DeleteRecipeStepById(int id)
         {
-            throw new NotImplementedException();
+            var result = new PostRequestResponse();
+            var t = _repo.GetById(id);
+            if (t == null)
+            {
+                result.Status = 404;
+                result.Message = "Not found! ID không tồn tại";
+                return result;
+            }
+            _repo.DetachEntity(t);
+            _repo.Delete((_repo.GetById(id)));
+            result.Status = 200;
+            result.Message = "OK!";
+            return result;
         }
 
         public RecipeStep GetRecipeStepById(int id)
         {
-            throw new NotImplementedException();
+            return _repo.GetById(id);
         }
 
-        public List<RecipeStep> GetRecipies()
+        public List<RecipeStep> GetRecipeSteps()
         {
-            throw new NotImplementedException();
+            return _repo.GetAll().ToList();
         }
 
-        public bool UpdateRecipeStep(RecipeStep step)
+        public ResponseObject UpdateRecipeStep(RecipeStepRequest step)
         {
-            throw new NotImplementedException();
+            var result = new PostRequestResponse();
+            if (_repo.GetById(step.Id) == null)
+            {
+                result.Status = 400;
+                result.Message = "Bad request! Id không tồn tại";
+                return result;
+            }
+            if (_recipeRepo.GetById(step.RecipeId) == null)
+            {
+                result.Status = 400;
+                result.Message = "Bad request! Không có recipe tương ứng";
+                return result;
+            }
+            if (string.IsNullOrWhiteSpace(step.Description))
+            {
+                result.Status = 400;
+                result.Message = "Bad request! chuỗi trống";
+                return result;
+            }
+            result.Status = 200;
+            result.Message = "OK!";
+            return result;
         }
     }
 }

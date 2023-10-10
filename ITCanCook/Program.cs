@@ -107,8 +107,30 @@ builder.Services.AddScoped<IBaseRepository<dynamic>, BaseRepository<dynamic>>();
 builder.Services.AddScoped<ICookingHobbyRepo, CookingHobbyRepository>();
 builder.Services.AddScoped<ICookingHobbyService, CookingHobbyService>();
 
-//builder.Services.AddScoped<IIngredientService, IngredientService>();
-//builder.Services.AddScoped<IIngredientCategoryRepo, IngredientCategoryRepository>();
+builder.Services.AddScoped<IIngredientCategoryRepo, IngredientCategoryRepository>();
+builder.Services.AddScoped<IIngredientCategoryService, IngredientCategoryService>();
+
+builder.Services.AddScoped<IIngredientRepo, IngredientRepository>();
+builder.Services.AddScoped<IIngredientService, IngredientService>();
+
+builder.Services.AddScoped<IEquipmentRepo, EquipmentRepository>();
+builder.Services.AddScoped<IEquipmentService, EquipmentService>();
+
+builder.Services.AddScoped<IHealthConditionCategoryRepo, HealthConditionCategoryRepo>();
+builder.Services.AddScoped<IHealthConditionCategoryService, HealthCategoryService>();
+
+builder.Services.AddScoped<IHealthConditionRepo, HealthConditionRepository>();
+builder.Services.AddScoped<IHealthConditionService, HealthConditionService>();
+
+builder.Services.AddScoped<IRecipeAmountRepo, RecipeAmountRepository>();
+builder.Services.AddScoped<IRecipeAmountService, RecipeAmountService>();
+
+builder.Services.AddScoped<IRecipeStepRepo, RecipeStepRepository>();
+builder.Services.AddScoped<IRecipeStepService, RecipeStepService>();
+
+builder.Services.AddScoped<IRecipeRepo, RecipeRepository>();
+builder.Services.AddScoped<IRecipeService, RecipeService>();
+
 
 //đăng ký mapper
 builder.Services.AddAutoMapper(typeof(ModelMappers));
