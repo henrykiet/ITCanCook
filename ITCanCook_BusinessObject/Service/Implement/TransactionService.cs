@@ -42,6 +42,10 @@ namespace ITCanCook_BusinessObject.Service.Implement
 			//lấy userId
 			var userId = model.UserId;
 			var user = _userManager.FindByIdAsync(userId).Result;
+			if(user == null)
+			{
+				return JsonConvert.DeserializeObject<MomoCreatePaymentResquestModel>("User không tồn tại");
+			}
 			//gói dịch vụ và giá
 			var transactionType = string.Empty;
 			var type = TransactionType.PRENIUM_WEEK;

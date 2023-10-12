@@ -113,9 +113,9 @@ namespace ITCanCook_DataAcecss.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2b65dcb1-15f2-47d9-ab97-95f7b55cad06",
+                            Id = "76ac1962-f99a-487c-98e5-f3559a574d97",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6bb96560-b2ea-4e40-90fe-ee910463f1e7",
+                            ConcurrencyStamp = "a7d4d855-e293-4be9-8492-74eecaea0707",
                             Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
@@ -127,9 +127,9 @@ namespace ITCanCook_DataAcecss.Migrations
                             Name = "admin",
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEN8pVOJf1EykD4U9jy3ZbpGrDzX2zWoJYct2Ka5DV7eTvYCfcjvrnqV1K4psXiRFtA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOfdufnjy8bQUt7bMT1kDf5sxrFz42pVaqaazvrq9Sx5hr2m442GW/4lW7VsgXUj8Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8b2bb9dc-22c4-45ec-839f-1bdde7de28c4",
+                            SecurityStamp = "b7d3b8b3-da29-462d-a7af-a4127b80e029",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com",
                             Weight = 0f
@@ -454,21 +454,21 @@ namespace ITCanCook_DataAcecss.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "896bccd4-678e-4116-8e10-5ddf506883b4",
+                            ConcurrencyStamp = "01b13e95-0b0f-4dc2-81c7-4ea3ce2b687b",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "65f7816c-1101-4648-9ed0-58aa621d8469",
+                            ConcurrencyStamp = "afe2e2e9-f79d-450d-8643-410e57828750",
                             Name = "Chef",
                             NormalizedName = "CHEF"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "3241af2c-7e84-41c0-9864-e29e07252df8",
+                            ConcurrencyStamp = "9f144b05-f14f-4c8b-b6ae-6d47dc28ab65",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -563,7 +563,7 @@ namespace ITCanCook_DataAcecss.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "2b65dcb1-15f2-47d9-ab97-95f7b55cad06",
+                            UserId = "76ac1962-f99a-487c-98e5-f3559a574d97",
                             RoleId = "1"
                         });
                 });
