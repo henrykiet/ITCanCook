@@ -2,9 +2,11 @@
 using ITCanCook_BusinessObject.Service.Interface;
 using ITCanCook_BusinessObject.ServiceModel.RequestModel;
 using ITCanCook_BusinessObject.ServiceModel.ResponseModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Asn1.Ocsp;
+using System.Data;
 
 namespace ITCanCook.Controllers
 {
@@ -33,6 +35,7 @@ namespace ITCanCook.Controllers
         }
 
         [HttpPost("create")]
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateHealthCategory([FromBody] HealthConditionCategoryCreateRequest category)
         {
             var result = _service.CreateHealthConditionCategory(category);
@@ -45,6 +48,7 @@ namespace ITCanCook.Controllers
         }
 
         [HttpPut("update")]
+        [Authorize(Roles = "Admin")]
         public IActionResult UpdateHealthCategory([FromBody] HealthConditionCategoryRequest category)
         {
             var result = _service.UpdateHealthConditionCategory(category);
@@ -57,6 +61,7 @@ namespace ITCanCook.Controllers
         }
 
         [HttpDelete("delete/{categoryId:int}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteHealthCategory(int categoryId)
         {
             var result = _service.DeleteHealthConditionCategoryById(categoryId);
