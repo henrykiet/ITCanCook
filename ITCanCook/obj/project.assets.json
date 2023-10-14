@@ -5629,24 +5629,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ACER\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\kiety\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ACER\\Desktop\\ITCanCook\\ITCanCook\\ITCanCook.csproj",
+      "projectUniqueName": "D:\\learn\\8\\EXE201\\ITCanCook_EXE201\\ITCanCook\\ITCanCook.csproj",
       "projectName": "ITCanCook",
-      "projectPath": "C:\\Users\\ACER\\Desktop\\ITCanCook\\ITCanCook\\ITCanCook.csproj",
-      "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ACER\\Desktop\\ITCanCook\\ITCanCook\\obj\\",
+      "projectPath": "D:\\learn\\8\\EXE201\\ITCanCook_EXE201\\ITCanCook\\ITCanCook.csproj",
+      "packagesPath": "C:\\Users\\kiety\\.nuget\\packages\\",
+      "outputPath": "D:\\learn\\8\\EXE201\\ITCanCook_EXE201\\ITCanCook\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\kiety\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5654,15 +5649,15 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
+        "C:\\Program Files\\dotnet\\sdk\\7.0.302\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\ACER\\Desktop\\ITCanCook\\ITCanCook_BusinessObject\\ITCanCook_BusinessObject.csproj": {
-              "projectPath": "C:\\Users\\ACER\\Desktop\\ITCanCook\\ITCanCook_BusinessObject\\ITCanCook_BusinessObject.csproj"
+            "D:\\learn\\8\\EXE201\\ITCanCook_EXE201\\ITCanCook_BusinessObject\\ITCanCook_BusinessObject.csproj": {
+              "projectPath": "D:\\learn\\8\\EXE201\\ITCanCook_EXE201\\ITCanCook_BusinessObject\\ITCanCook_BusinessObject.csproj"
             }
           }
         }
@@ -5735,16 +5730,8 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Users\\ACER\\Desktop\\ITCanCook\\ITCanCook\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  }
 }
