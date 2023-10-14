@@ -3,8 +3,10 @@ using ITCanCook_BusinessObject.Service.Interface;
 using ITCanCook_BusinessObject.ServiceModel.RequestModel;
 using ITCanCook_BusinessObject.ServiceModel.ResponseModel;
 using ITCanCook_DataAcecss.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace ITCanCook.Controllers
 {
@@ -33,6 +35,7 @@ namespace ITCanCook.Controllers
         }
 
         [HttpPost("create")]
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateEquipment([FromBody] EquipmentCreateRequest request)
         {
             var result = _service.CreateEquipment(request);
@@ -45,6 +48,7 @@ namespace ITCanCook.Controllers
         }
 
         [HttpDelete("delete/{hobbyId:int}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteEquipmentById(int hobbyId)//lưu ý hàm này sẽ xoá luôn record, khuyến cáo dùng update để chỉnh status thay vì delete
         {
             var result = _service.DeleteEquipmentById(hobbyId);
@@ -55,7 +59,7 @@ namespace ITCanCook.Controllers
             };
             return jsonResult;
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPut("update")]
         public IActionResult UpdateEquipment([FromBody] EquipmentRequest request)
         {

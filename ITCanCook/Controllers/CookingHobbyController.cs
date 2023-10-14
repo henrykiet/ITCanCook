@@ -22,7 +22,6 @@ namespace ITCanCook.Controllers
         }
 
         [HttpGet("get-all")]
-        [Authorize(Roles = "Admin,Customer")]
         public List<CookingHobbyResponse> GetAllCookingHobbys()
         {
             return _mapper.Map<List<CookingHobbyResponse>>(_service.GetCookingHobbys());
@@ -33,7 +32,7 @@ namespace ITCanCook.Controllers
         {
             return _mapper.Map<CookingHobbyResponse>(_service.GetCookingHobbyById(hobbyId));
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost("create")]
         public IActionResult CreateCookingHobby([FromBody] CookingHobbyCreateRequest request)
         {
@@ -45,7 +44,7 @@ namespace ITCanCook.Controllers
             };
             return jsonResult;
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("delete/{hobbyId:int}")]
         public IActionResult DeleteCookingHobbyById(int hobbyId)//lưu ý hàm này sẽ xoá luôn record, khuyến cáo dùng update để chỉnh status thay vì delete
         {
@@ -59,6 +58,7 @@ namespace ITCanCook.Controllers
         }
 
         [HttpPut("update")]
+        [Authorize(Roles = "Admin")]
         public IActionResult UpdateCookingHobby([FromBody] CookingHobbyRequest request)
         {
             var result = _service.UpdateCookingHobby(request);

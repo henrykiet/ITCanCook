@@ -3,8 +3,10 @@ using ITCanCook_BusinessObject.Service.Implement;
 using ITCanCook_BusinessObject.ServiceModel.RequestModel;
 using ITCanCook_BusinessObject.ServiceModel.ResponseModel;
 using ITCanCook_DataAcecss.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace ITCanCook.Controllers
 {
@@ -32,43 +34,6 @@ namespace ITCanCook.Controllers
             return _mapper.Map<RecipeResponse>(_service.GetRecipe(recipeId));
         }
 
-        [HttpPost("create")]
-        public IActionResult CreateRecipe([FromBody] RecipeCreateRequest recipe)
-        {
-            var result = _service.CreateRecipe(recipe);
-            var statusCode = (int)result.Status;
-            var jsonResult = new JsonResult(result)
-            {
-                StatusCode = statusCode
-            };
-            return jsonResult;
-        }
-
-        [HttpPut("update")]
-        public IActionResult UpdateRecipe([FromBody] RecipeRequest recipe)
-        {
-            var result = _service.UpdateRecipe(recipe);
-            var statusCode = (int)result.Status;
-            var jsonResult = new JsonResult(result)
-            {
-                StatusCode = statusCode
-            };
-            return jsonResult;
-        }
-
-        [HttpDelete("delete/{recipeId:int}")]
-        public IActionResult DeleteRecipe(int recipeId)
-        {
-            var result = _service.DeleteRecipe(recipeId);
-            var statusCode = (int)result.Status;
-            var jsonResult = new JsonResult(result)
-            {
-                StatusCode = statusCode
-            };
-            return jsonResult;
-        }
-
-
         /// <summary>
         /// Tạo menu 3 món cho 3 bữa dựa trên 3 loại ID nhập vào 
         /// </summary>
@@ -79,7 +44,6 @@ namespace ITCanCook.Controllers
         {
             return _service.FilterToMenu(request);
         }
-
 
         /// <summary>
         /// Lấy danh sách recipe dựa theo Id của equipment
@@ -92,11 +56,14 @@ namespace ITCanCook.Controllers
             return _mapper.Map<List<RecipeResponse>>(_service.GetRecipesByEquipmentId(equipmentId));
         }
 
+        #region note update ko liên quan
         // recipes?healthId=1
         // recipes => List
         // recipes?pram => filter List HttpGet() 
         // recipes/{id} => get one by id
         // recipes/{recipeId}/ingredients => list ingredient
+        #endregion
+
         /// <summary>
         /// Lấy danh sách recipe dựa theo Id của Health condition
         /// </summary>
@@ -117,7 +84,6 @@ namespace ITCanCook.Controllers
         {
             return _mapper.Map<List<RecipeResponse>>(_service.GetRecipesByCookingHobbyId(hobbyId));
         }
-
 
         /// <summary>
         /// Lấy trả về định lượng nguyên liệu của 1 công thức nhất định
@@ -149,5 +115,47 @@ namespace ITCanCook.Controllers
         {
             return _mapper.Map<List<RecipeResponse>>(_service.GetRecipeWithIngredientsList(inputList));
         }
+
+        [HttpPost("create")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult CreateRecipe([FromBody] RecipeCreateRequest recipe)
+        {
+            var result = _service.CreateRecipe(recipe);
+            var statusCode = (int)result.Status;
+            var jsonResult = new JsonResult(result)
+            {
+                StatusCode = statusCode
+            };
+            return jsonResult;
+        }
+
+        [HttpPut("update")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult UpdateRecipe([FromBody] RecipeRequest recipe)
+        {
+            var result = _service.UpdateRecipe(recipe);
+            var statusCode = (int)result.Status;
+            var jsonResult = new JsonResult(result)
+            {
+                StatusCode = statusCode
+            };
+            return jsonResult;
+        }
+
+        [HttpDelete("delete/{recipeId:int}")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult DeleteRecipe(int recipeId)
+        {
+            var result = _service.DeleteRecipe(recipeId);
+            var statusCode = (int)result.Status;
+            var jsonResult = new JsonResult(result)
+            {
+                StatusCode = statusCode
+            };
+            return jsonResult;
+        }
+
+
+        
     }
 }

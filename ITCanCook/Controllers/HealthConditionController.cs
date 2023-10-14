@@ -2,10 +2,12 @@
 using ITCanCook_BusinessObject.Service.Interface;
 using ITCanCook_BusinessObject.ServiceModel.RequestModel;
 using ITCanCook_BusinessObject.ServiceModel.ResponseModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Asn1.Ocsp;
 using System.Collections.Generic;
+using System.Data;
 
 namespace ITCanCook.Controllers
 {
@@ -34,7 +36,14 @@ namespace ITCanCook.Controllers
             return _mapper.Map<HealthConditionResponse>(_service.GetHealthConditionById(healthId));
         }
 
+        [HttpGet("get-by-category-id/{categoryId:int}")]
+        public List<HealthConditionResponse> GetHealthConditionsByCategoryId(int categoryId)
+        {
+            return _mapper.Map<List<HealthConditionResponse>>(categoryId);
+        }
+
         [HttpPost("create")]
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateRecipe([FromBody] HealthConditionCreateRequest request)
         {
             var result = _service.CreateHealthCondition(request);
@@ -47,6 +56,7 @@ namespace ITCanCook.Controllers
         }
 
         [HttpPut("update")]
+        [Authorize(Roles = "Admin")]
         public IActionResult UpdateHealthCondition([FromBody] HealthConditionRequest request)
         {
             var result = _service.UpdateHealthCondition(request);
@@ -59,6 +69,7 @@ namespace ITCanCook.Controllers
         }
 
         [HttpDelete("delete/{healthId:int}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteHealthCondition(int healthId)
         {
             var result = _service.DeleteHealthConditionById(healthId);
@@ -68,12 +79,6 @@ namespace ITCanCook.Controllers
                 StatusCode = statusCode
             };
             return jsonResult;
-        }
-
-        [HttpGet("get-by-category-id/{categoryId:int}")]
-        public List<HealthConditionResponse> GetHealthConditionsByCategoryId(int categoryId)
-        {
-            return _mapper.Map<List<HealthConditionResponse>>(categoryId);
         }
     }
 }

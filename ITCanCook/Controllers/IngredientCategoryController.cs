@@ -3,9 +3,11 @@ using ITCanCook_BusinessObject.Service.Interface;
 using ITCanCook_BusinessObject.ServiceModel.RequestModel;
 using ITCanCook_BusinessObject.ServiceModel.ResponseModel;
 using ITCanCook_DataAcecss.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Asn1.Ocsp;
+using System.Data;
 
 namespace ITCanCook.Controllers
 {
@@ -33,6 +35,7 @@ namespace ITCanCook.Controllers
         }
 
         [HttpPost("create")]
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateIngredientCategory([FromBody] IngredientCategoryCreateRequest category)
         {
             var result = _service.CreateIngredientCategory(category);
@@ -45,6 +48,7 @@ namespace ITCanCook.Controllers
         }
 
         [HttpPut("update")]
+        [Authorize(Roles = "Admin")]
         public IActionResult UpdateIngredientCategory([FromBody] IngredientCategoryRequest category)
         {
             var result = _service.UpdateIngredientCategory(category);
@@ -57,6 +61,7 @@ namespace ITCanCook.Controllers
         }
 
         [HttpDelete("delete/{categoryId:int}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteIngredientCategoryById(int categoryId)
         {
             var result = _service.DeleteIngredientCategoryById(categoryId);

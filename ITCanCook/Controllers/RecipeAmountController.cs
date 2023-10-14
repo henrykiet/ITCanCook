@@ -3,9 +3,11 @@ using ITCanCook_BusinessObject.Service.Interface;
 using ITCanCook_BusinessObject.ServiceModel.RequestModel;
 using ITCanCook_BusinessObject.ServiceModel.ResponseModel;
 using ITCanCook_DataAcecss.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Data;
 
 namespace ITCanCook.Controllers
 {
@@ -34,7 +36,17 @@ namespace ITCanCook.Controllers
             return _mapper.Map<RecipeAmountResponse>(_service.GetRecipeAmountById(amountId)) ;
         }
 
+
+        //[HttpGet("get-by-recipe-id/{recipeId:int}")]
+        [HttpGet("recipes/{recipeId:int}/amounts")]
+        // ingredent + amount
+        public List<RecipeAmountResponse> GetAmountByRecipeId(int recipeId)
+        {
+            return _mapper.Map<List<RecipeAmountResponse>>(_service.GetAmountByRecipeId(recipeId));
+        }
+
         [HttpPost("create")]
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateRecipeAmount([FromBody] RecipeAmountCreateRequest amount)
         {
             var result = _service.CreateRecipeAmount(amount);
@@ -47,6 +59,7 @@ namespace ITCanCook.Controllers
         }
 
         [HttpPut("update")]
+        [Authorize(Roles = "Admin")]
         public IActionResult UpdateRecipeAmount([FromBody] RecipeAmountRequest amount)
         {
             var result = _service.UpdateRecipeAmount(amount);
@@ -59,6 +72,7 @@ namespace ITCanCook.Controllers
         }
 
         [HttpDelete("delete/{amountId:int}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteRecipeAmount(int amountId)
         {
             var result = _service.DeleteRecipeAmountById(amountId);
@@ -68,14 +82,6 @@ namespace ITCanCook.Controllers
                 StatusCode = statusCode
             };
             return jsonResult;
-        }
-
-        //[HttpGet("get-by-recipe-id/{recipeId:int}")]
-        [HttpGet("recipes/{recipeId:int}/amounts")]
-        // ingredent + amount
-        public List<RecipeAmountResponse> GetAmountByRecipeId(int recipeId)
-        {
-            return _mapper.Map<List<RecipeAmountResponse>>(_service.GetAmountByRecipeId(recipeId));
         }
     }
 }

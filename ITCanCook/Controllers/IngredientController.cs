@@ -3,9 +3,11 @@ using ITCanCook_BusinessObject.Service.Interface;
 using ITCanCook_BusinessObject.ServiceModel.RequestModel;
 using ITCanCook_BusinessObject.ServiceModel.ResponseModel;
 using ITCanCook_DataAcecss.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Data;
 
 namespace ITCanCook.Controllers
 {
@@ -33,7 +35,20 @@ namespace ITCanCook.Controllers
             return  _mapper.Map<IngredientResponse>(_service.GetIngredientById(ingredientId));
         }
 
+        [HttpGet("{categoryId:int}/details")]
+        public List<IngredientResponse> GetIngredientsByCategoryId(int categoryId)
+        {
+            return _mapper.Map<List<IngredientResponse>>(_service.GetIngredientsByCategoryId(categoryId));
+        }
+
+        [HttpGet("{categoryId:int}/names")]
+        public List<string> GetIngredientNamesByCategoryId(int categoryId)
+        {
+            return _mapper.Map<List<string>>(_service.GetIngredientNamesByCategoryId(categoryId));
+        }
+
         [HttpPost("create")]
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateIngredient([FromBody] IngredientCreateRequest ingredient)
         {
             var result = _service.CreateIngredient(ingredient);
@@ -46,6 +61,7 @@ namespace ITCanCook.Controllers
         }
 
         [HttpPut("update")]
+        [Authorize(Roles = "Admin")]
         public IActionResult UpdateIngredient([FromBody] IngredientRequest ingredient)
         {
             var result =  _service.UpdateIngredient(ingredient);
@@ -59,6 +75,7 @@ namespace ITCanCook.Controllers
         }
 
         [HttpDelete("delete/{ingredientId:int}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteIngredientById(int ingredentId)
         {
             var result = _service.DeleteIngredientById(ingredentId);
@@ -68,17 +85,6 @@ namespace ITCanCook.Controllers
                 StatusCode = statusCode
             };
             return jsonResult;
-        }
-
-        [HttpGet("{categoryId:int}/details")]
-        public List<IngredientResponse> GetIngredientsByCategoryId(int categoryId)
-        {
-            return _mapper.Map<List<IngredientResponse>>(_service.GetIngredientsByCategoryId(categoryId));
-        }
-        [HttpGet("{categoryId:int}/names")]
-        public List<string> GetIngredientNamesByCategoryId(int categoryId)
-        {
-            return _mapper.Map<List<string>>(_service.GetIngredientNamesByCategoryId(categoryId));
         }
 
     }
