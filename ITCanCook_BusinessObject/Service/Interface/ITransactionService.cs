@@ -15,6 +15,6 @@ namespace ITCanCook_BusinessObject.Service.Interface
 	{
 		Task<MomoCreatePaymentResquestModel> CreatePaymentAsync(OrderInfoModel model);
 		Task<ResponseObject> MomoPaymentReturn(MomoOnetimePaymentResponseModel model);
-		public Task<string> ScheduleHangfireJobToUpdateIsPremium(string userId);
+		Task<ResponseObject> ScheduleHangfireJobToUpdateIsPremium(TransactionStatus status, string userId, TransactionType isPremiumDate, double amount);
 	}
 }

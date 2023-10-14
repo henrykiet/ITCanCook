@@ -41,7 +41,7 @@ public class ITCanCookContext : IdentityDbContext<ApplicationUser>
 		builder.Entity<IdentityRole>().HasData
 		(
 			new IdentityRole() { Id = "1", Name = "Admin", NormalizedName = "ADMIN" },
-			new IdentityRole() { Id = "2", Name = "Chef", NormalizedName = "CHEF" },
+			new IdentityRole() { Id = "2", Name = "Prenium", NormalizedName = "PRENIUM" },
 			new IdentityRole() { Id = "3", Name = "Customer", NormalizedName = "CUSTOMER" }
 		);
 
