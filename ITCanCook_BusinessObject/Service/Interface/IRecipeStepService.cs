@@ -16,5 +16,6 @@ namespace ITCanCook_BusinessObject.Service.Interface
         public ResponseObject CreateRecipeStep(RecipeStepCreateRequest step);
         public ResponseObject UpdateRecipeStep(RecipeStepRequest step);
         public ResponseObject DeleteRecipeStepById(int id);
+        public List<RecipeStep> GetStepByRecipeId(int recipeId);
     }
 }

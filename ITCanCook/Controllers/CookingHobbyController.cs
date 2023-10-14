@@ -22,6 +22,7 @@ namespace ITCanCook.Controllers
         }
 
         [HttpGet("get-all")]
+        [Authorize(Roles = "Admin,Customer")]
         public List<CookingHobbyResponse> GetAllCookingHobbys()
         {
             return _mapper.Map<List<CookingHobbyResponse>>(_service.GetCookingHobbys());

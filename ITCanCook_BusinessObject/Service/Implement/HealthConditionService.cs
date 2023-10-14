@@ -117,5 +117,10 @@ namespace ITCanCook_BusinessObject.Service.Implement
             result.Message = "OK! Cập nhật thành công";
             return result;
         }
+
+        public List<HealthCondition> GetConditionByCategoryId(int categoryId)
+        {
+            return _repo.Get(h => h.HealthConditionCategoryId == categoryId).ToList();
+        }
     }
 }

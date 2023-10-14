@@ -16,5 +16,6 @@ namespace ITCanCook_BusinessObject.Service.Interface
         public ResponseObject CreateHealthCondition(HealthConditionCreateRequest style);
         public ResponseObject UpdateHealthCondition(HealthConditionRequest style);
         public ResponseObject DeleteHealthConditionById(int id);
+        public List<HealthCondition> GetConditionByCategoryId(int categoryId);
     }
 }

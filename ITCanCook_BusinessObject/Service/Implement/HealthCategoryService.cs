@@ -74,7 +74,7 @@ namespace ITCanCook_BusinessObject.Service.Implement
                 if ( currentMaxIndexDisplay >= category.IndexDisplay)
                 {
                     result.Status = 400;
-                    result.Message = "index display bé hơn hoc85 bằng index display hiện tại : "+currentMaxIndexDisplay;
+                    result.Message = "index display bé hơn hoặc bằng index display hiện tại : "+currentMaxIndexDisplay;
                     return result;
                 }
             }
