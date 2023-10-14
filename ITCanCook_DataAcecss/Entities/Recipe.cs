@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ITCanCook_DataAcecss.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -30,6 +31,7 @@ namespace ITCanCook_DataAcecss.Entities
 		public int ServingSize { get; set; }
 		public int Energy { get;set; }
 		public string Meals { get; set; }
+		public  RecipeStatus Status { get; set; }
 
 
 		public List<RecipeStep> Steps { get; set; }

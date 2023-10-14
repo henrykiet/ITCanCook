@@ -262,16 +262,90 @@ namespace ITCanCook_BusinessObject.Service.Implement
 			}
 		}
 		//hàm test hangfire
-		public async Task<string> ScheduleHangfireJobToUpdateIsPremium(string userId)
+		public async Task<ResponseObject> ScheduleHangfireJobToUpdateIsPremium(TransactionStatus status, string userId, TransactionType isPremiumDate,double amount)
 		{
-			// Đặt công việc Hangfire để cập nhật IsPrenium thành false sau 20 giây
-			var jobId = BackgroundJob.Schedule(() => UpdateIsPremiumToFalseAsync(userId), TimeSpan.FromSeconds(20));
+				var result = new ResponseObject();
+			try
+			{
+				// Kiểm tra xem id có tồn tại hay không
+				var userExist = _userManager.FindByIdAsync(userId).Result;
+				if (userExist != null && status == 0)
+				{
+					// Tạo giao dịch
+					var transaction = new Transaction
+					{
+						Id = Guid.NewGuid().ToString(),
+						UserId = userExist.Id,
+						Notice = "Thanh toán thành công",
+						Amount = amount,
+						TransactionDate = DateTime.Now,
+						TransactionId = "",
+						Status = status,
+						TransactionType = isPremiumDate
+					};
+					// Xác định EndDate dựa trên TransactionType
+					switch (isPremiumDate)
+					{
+						case TransactionType.PRENIUM_WEEK:
+							// Nếu TransactionType là PRENIUM_WEEK, thì EndDate sẽ là ngày hiện tại cộng thêm 1 tuần
+							transaction.EndDate = DateTime.Now.AddDays(7);
+							break;
+						case TransactionType.PRENIUM_MONTH:
+							// Tương tự, bạn có thể xử lý cho các trường hợp khác ở đây
+							transaction.EndDate = DateTime.Now.AddMonths(1);
+							break;
+						case TransactionType.PRENIUM_HALFYEAR:
+							transaction.EndDate = DateTime.Now.AddMonths(6);
+							break;
+						case TransactionType.PRENIUM_YEAR:
+							transaction.EndDate = DateTime.Now.AddYears(1);
+							break;
+						default:
+							// Xử lý trường hợp không xác định
+							transaction.EndDate = DateTime.Now; // Đặt EndDate thành ngày hiện tại
+							break;
+					}
 
-			// Trả về jobId cho người dùng hoặc lưu vào cơ sở dữ liệu tùy theo nhu cầu
-			return jobId;
+					// Kiểm tra trạng thái của giao dịch
+					var newTransaction = _transactionRepositopry.Insert(transaction);
+					if (newTransaction)
+					{
+						if (await UpdateIsPremiumIfPaidAsync(transaction.Id, transaction.UserId))
+						{
+							// Giao dịch thành công
+							result.Status = 200;
+							result.Message = "Giao dịch thành công.";
+
+							// Đặt công việc Hangfire để cập nhật IsPrenium thành false sau khi hết hạn
+							var jobId = BackgroundJob.Schedule(()
+								=> UpdateIsPremiumToFalseAsync(transaction.UserId), transaction.EndDate);
+						}
+					}
+					else
+					{
+						// Giao dịch không thành công
+						result.Status = 400;
+						result.Message = "Tạo giao dịch không thành công.";
+					}
+				}
+				else
+				{
+					// User không tồn tại
+					result.Status = 400;
+					result.Message = "Người dùng hoặc giao dịch không tồn tại!";
+				}
+
+			}
+			catch (Exception)
+			{
+				// Xử lý ngoại lệ nếu có lỗi xảy ra
+				result.Status = 500; // Hoặc mã lỗi nếu có lỗi xảy ra
+				result.Message = "Có lỗi xảy ra trong quá trình xử lý giao dịch.";
+				// Log ngoại lệ ex tại đây nếu cần
+			}
+
+			return result;
 		}
-
-
 
 
 		#endregion
