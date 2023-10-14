@@ -43,6 +43,7 @@ namespace ITCanCook_BusinessObject.Service.Implement
                 result.Message = "Bad request! Chuỗi trống";
                 return result;
             }
+
             _repo.Create(_mapper.Map<RecipeStep>(step));
             result.Status = 200;
             result.Message = "OK!";
@@ -91,6 +92,24 @@ namespace ITCanCook_BusinessObject.Service.Implement
                 result.Message = "Bad request! Không có recipe tương ứng";
                 return result;
             }
+            var tmp = _repo.Get(s => s.RecipeId == step.RecipeId && s.Index == step.Index).FirstOrDefault();
+            if(tmp != null && tmp.Id != step.Id)
+            {
+                result.Status = 400;
+                result.Message = "Trùng thông tin với step ID: "+tmp.Id+" biểu diễn cho recipe ID: "+tmp.RecipeId;
+                return result;
+            }
+            List<RecipeStep> list = _repo.GetAll().ToList();
+            if(list.Count > 0)
+            {
+                int currentMaxIndexOfRecipe = list.Where(r => r.RecipeId == step.RecipeId).Max(r => r.Index);
+                if(currentMaxIndexOfRecipe > step.Index)
+                {
+                    result.Status = 400;
+                    result.Message = "Index cần cập nhật bé hơn index lớn nhất hiện tại: "+currentMaxIndexOfRecipe+", thuộc recipe id: "+step.RecipeId;
+                    return result;
+                }
+            }
             if (string.IsNullOrWhiteSpace(step.Description))
             {
                 result.Status = 400;
@@ -101,5 +120,12 @@ namespace ITCanCook_BusinessObject.Service.Implement
             result.Message = "OK!";
             return result;
         }
+
+        public List<RecipeStep> GetStepByRecipeId(int recipeId)
+        {
+            return _repo.Get(s => s.RecipeId == recipeId).OrderBy(s => s.Index).ToList();
+        }
+
+
     }
 }

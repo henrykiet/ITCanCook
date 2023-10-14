@@ -22,7 +22,7 @@ namespace ITCanCook.Controllers
             _service = service;
         }
 
-        [HttpGet("get-all-health-condition")]
+        [HttpGet("get-all")]
         public List<HealthConditionResponse> GetAllHealthCondition()
         {
             return _mapper.Map<List<HealthConditionResponse>>(_service.GetHealthConditions());
@@ -68,6 +68,12 @@ namespace ITCanCook.Controllers
                 StatusCode = statusCode
             };
             return jsonResult;
+        }
+
+        [HttpGet("get-by-category-id/{categoryId:int}")]
+        public List<HealthConditionResponse> GetHealthConditionsByCategoryId(int categoryId)
+        {
+            return _mapper.Map<List<HealthConditionResponse>>(categoryId);
         }
     }
 }
