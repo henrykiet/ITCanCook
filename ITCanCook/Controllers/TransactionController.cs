@@ -3,6 +3,7 @@ using ITCanCook_BusinessObject.Service.Interface;
 using ITCanCook_BusinessObject.ServiceModel.Momo;
 using ITCanCook_BusinessObject.ServiceModel.Order;
 using ITCanCook_DataAcecss.Enum;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -108,7 +109,7 @@ namespace ITCanCook.Controllers
 			};
 			return jsonResult;
 		}
-
+		//[Authorize]
 		[HttpGet("CheckAndUpdateIsPremium")]
 		public async Task<IActionResult> CheckAndUpdateIsPremium(TransactionStatus status, string userId, TransactionType isPremiumDate, double amount)
 		{
