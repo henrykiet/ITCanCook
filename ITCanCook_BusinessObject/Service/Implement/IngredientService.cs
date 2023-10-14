@@ -118,5 +118,21 @@ namespace ITCanCook_BusinessObject.Service.Implement
             result.Message = "OK! Tạo thành công";
             return result;
         }
+
+		public List<Ingredient> GetIngredientsByCategoryId(int categoryId)
+		{
+			return _repo.Get(i => i.IngredientCategoryId == categoryId).ToList();
+		}
+
+		public List<string> GetIngredientNamesByCategoryId(int categoryId)
+		{
+			List<Ingredient> ingredients = GetIngredientsByCategoryId(categoryId);
+			List<string> list = new List<string>();
+			foreach (var ingredient in ingredients)
+			{
+				list.Add(ingredient.name);
+			}
+			return list;
+		}
 	}
 }

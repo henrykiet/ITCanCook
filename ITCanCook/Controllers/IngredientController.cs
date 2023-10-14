@@ -5,6 +5,7 @@ using ITCanCook_BusinessObject.ServiceModel.ResponseModel;
 using ITCanCook_DataAcecss.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace ITCanCook.Controllers
 {
@@ -57,7 +58,7 @@ namespace ITCanCook.Controllers
 
         }
 
-        [HttpDelete("delete-by-id/{ingredientId:int}")]
+        [HttpDelete("delete/{ingredientId:int}")]
         public IActionResult DeleteIngredientById(int ingredentId)
         {
             var result = _service.DeleteIngredientById(ingredentId);
@@ -69,6 +70,16 @@ namespace ITCanCook.Controllers
             return jsonResult;
         }
 
+        [HttpGet("{categoryId:int}/details")]
+        public List<IngredientResponse> GetIngredientsByCategoryId(int categoryId)
+        {
+            return _mapper.Map<List<IngredientResponse>>(_service.GetIngredientsByCategoryId(categoryId));
+        }
+        [HttpGet("{categoryId:int}/names")]
+        public List<string> GetIngredientNamesByCategoryId(int categoryId)
+        {
+            return _mapper.Map<List<string>>(_service.GetIngredientNamesByCategoryId(categoryId));
+        }
 
     }
 }

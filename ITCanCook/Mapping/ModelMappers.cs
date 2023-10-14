@@ -12,18 +12,25 @@ namespace ITCanCook.Mapping
 			#region Data <-> Request
 			CreateMap<CookingHobby, CookingHobbyRequest>().ReverseMap();
 			CreateMap<CookingHobby, CookingHobbyCreateRequest>().ReverseMap();
+
 			CreateMap<IngredientCategory, IngredientCategoryRequest>().ReverseMap();
 			CreateMap<IngredientCategory, IngredientCategoryCreateRequest>().ReverseMap();
+
             CreateMap<Ingredient, IngredientRequest>().ReverseMap();
             CreateMap<Ingredient, IngredientCreateRequest>().ReverseMap();
+
             CreateMap<Equipment, EquipmentRequest>().ReverseMap();
             CreateMap<Equipment, EquipmentCreateRequest>().ReverseMap();
+
             CreateMap<HealthCondition, HealthConditionRequest>().ReverseMap();
             CreateMap<HealthCondition, HealthConditionCreateRequest>().ReverseMap();
+
             CreateMap<HealthConditionCategory, HealthConditionCategoryRequest>().ReverseMap();
             CreateMap<HealthConditionCategory, HealthConditionCategoryCreateRequest>().ReverseMap();
+
             CreateMap<RecipeAmount, RecipeAmountRequest>().ReverseMap();
             CreateMap<RecipeAmount, RecipeAmountCreateRequest>().ReverseMap();
+
             CreateMap<RecipeStep, RecipeStepRequest>().ReverseMap();
             CreateMap<RecipeStep, RecipeCreateRequest>().ReverseMap();
             CreateMap<Recipe, RecipeRequest>().ReverseMap();

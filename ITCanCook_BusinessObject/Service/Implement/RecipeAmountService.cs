@@ -49,6 +49,12 @@ namespace ITCanCook_BusinessObject.Service.Implement
                 result.Message = "Ingredient Id không tồn tại";
                 return result;
             }
+            if (string.IsNullOrWhiteSpace(amount.Amount))
+            {
+                result.Status = 400;
+                result.Message = "Amount trống thông tin";
+                return result;
+            }
             _repo.Create(_mapper.Map<RecipeAmount>(amount));
             result.Status = 200;
             result.Message = "OK";
@@ -61,14 +67,14 @@ namespace ITCanCook_BusinessObject.Service.Implement
             var t = _repo.GetById(id);
             if(t == null)
             {
-                result.Status = 400;
+                result.Status = 404;
                 result.Message = "Id không tồn tại";
                 return result;
             }
             _repo.DetachEntity(t);
             _repo.Delete(_repo.GetById(id));
-            result.Status = 400;
-            result.Message = "Trống thông tin";
+            result.Status = 200;
+            result.Message = "OK";
             return result;
         }
 
@@ -105,10 +111,29 @@ namespace ITCanCook_BusinessObject.Service.Implement
                 result.Message = "Ingredient Id không tồn tại";
                 return result;
             }
+            var a = _repo.Get(a => a.RecipeId == amount.RecipeId && a.IngredientId == amount.IngredientId).FirstOrDefault();
+            if (a != null && a.Id != amount.Id)
+            {
+                result.Status = 400;
+                result.Message = "Trùng thông tin với Id: "+a.Id +" có cặp RecipeId: "+a.RecipeId+"và IngredientId: "+a.IngredientId;
+                _repo.DetachEntity(a);
+                return result;
+            }
+            if (string.IsNullOrWhiteSpace(amount.Amount))
+            {
+                result.Status = 400;
+                result.Message = "Amount trống thông tin";
+                return result;
+            }
             _repo.Update(_mapper.Map<RecipeAmount>(amount));
             result.Status = 200;
             result.Message = "OK";
             return result;
+        }
+
+        public List<RecipeAmount> GetAmountByRecipeId(int recipeId)
+        {
+            return _repo.Get(a => a.RecipeId == recipeId).ToList();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ITCanCook_BusinessObject.ResponseObjects;
 using ITCanCook_BusinessObject.ResponseObjects.Abstraction;
+using ITCanCook_BusinessObject.Service.Interface;
 using ITCanCook_BusinessObject.ServiceModel.RequestModel;
 using ITCanCook_BusinessObject.ServiceModel.ResponseModel;
 using ITCanCook_DataAcecss.Entities;
@@ -20,24 +21,37 @@ namespace ITCanCook_BusinessObject.Service.Implement
         public ResponseObject CreateRecipe(RecipeCreateRequest recipe);
         public ResponseObject UpdateRecipe(RecipeRequest recipe);
         public ResponseObject DeleteRecipe(int id);
-
         public List<RecipeResponse> FilterToMenu(MenuFilterRequest request);
+        public List<Recipe> GetRecipesByEquipmentId(int equipmentId);
+        public List<Recipe> GetRecipesByHealthConditionId(int healthConditionId);
+        public List<Recipe> GetRecipesByCookingHobbyId(int cookingHobbyId);
+        //public List<Recipe> GetRecipesWithListAndMeal(List<Recipe> list, string meal);
+        public List<Recipe> GetRecipesWithMeal(string meal);
+        public List<IngredientAmountResponse> GetIngredientAndAmountByRecipeId(int recipeId);
+
+        public List<Recipe> GetRecipeWithIngredientsList(List<int> ingredientsInputList);
+
+
 
     }
-    public class RecipeService : IRecipeService 
+    public class RecipeService : IRecipeService
     {
         private readonly IRecipeRepo _repo;
         private readonly IMapper _mapper;
         private readonly IEquipmentRepo _eRepo;
         private readonly IHealthConditionRepo _hRepo;
         private readonly ICookingHobbyRepo _cRepo;
-        public RecipeService(IRecipeRepo repo, IMapper mapper,IEquipmentRepo eRepo, IHealthConditionRepo hRepo, ICookingHobbyRepo cRepo)
+        private readonly IIngredientRepo _iRepo;
+        private readonly IRecipeAmountRepo _aRepo;
+        public RecipeService(IRecipeRepo repo, IMapper mapper, IEquipmentRepo eRepo, IHealthConditionRepo hRepo, ICookingHobbyRepo cRepo, IIngredientRepo iRepo, IRecipeAmountRepo aRepo)
         {
             _repo = repo;
             _mapper = mapper;
             _eRepo = eRepo;
             _hRepo = hRepo;
             _cRepo = cRepo;
+            _iRepo = iRepo;
+            _aRepo = aRepo;
         }
         public Recipe GetRecipe(int id)
         {
@@ -46,12 +60,17 @@ namespace ITCanCook_BusinessObject.Service.Implement
 
         public List<Recipe> GetRecipes()
         {
-            return _repo.GetAll().ToList();
+            List<Recipe> list = _repo.GetAll().ToList();
+            if (list.Count == 0)
+            {
+                return null;
+            }
+            return list;
         }
         public ResponseObject CreateRecipe(RecipeCreateRequest recipe)
         {
             var result = new PostRequestResponse();
-            if (_eRepo.GetById(recipe.EquipmentId)==null)
+            if (_eRepo.GetById(recipe.EquipmentId) == null)
             {
                 result.Status = 400;
                 result.Message = "Equipment Id không tồn tại";
@@ -63,7 +82,7 @@ namespace ITCanCook_BusinessObject.Service.Implement
                 result.Message = "HealthCondition Id không tồn tại";
                 return result;
             }
-            if(_cRepo.GetById(recipe.CookingHobbyId) == null)
+            if (_cRepo.GetById(recipe.CookingHobbyId) == null)
             {
                 result.Status = 400;
                 result.Message = "Cooking hobby id không tồn tại";
@@ -79,7 +98,7 @@ namespace ITCanCook_BusinessObject.Service.Implement
             if (t != null)
             {
                 result.Status = 400;
-                result.Message = "Trùng tên với Recipe id "+t.Id;
+                result.Message = "Trùng tên với Recipe id " + t.Id;
                 _repo.DetachEntity(t);
                 return result;
             }
@@ -91,7 +110,7 @@ namespace ITCanCook_BusinessObject.Service.Implement
         public ResponseObject UpdateRecipe(RecipeRequest recipe)
         {
             var result = new PostRequestResponse();
-            
+
             if (_eRepo.GetById(recipe.EquipmentId) == null)
             {
                 result.Status = 400;
@@ -132,11 +151,11 @@ namespace ITCanCook_BusinessObject.Service.Implement
         public ResponseObject DeleteRecipe(int id)
         {
             var result = new ResponseObject();
-            if(_repo.GetById(id) == null)
+            if (_repo.GetById(id) == null)
             {
-                    result.Status = 404;
-                    result.Message = "Không tìm thấy id";
-                    return result;
+                result.Status = 404;
+                result.Message = "Không tìm thấy id";
+                return result;
             }
             _repo.Delete(_repo.GetById(id));
             result.Status = 200;
@@ -286,6 +305,80 @@ namespace ITCanCook_BusinessObject.Service.Implement
                 return 3;
             }));
             return _mapper.Map<List<RecipeResponse>>(recommendedRecipes.Take(3).ToList());
+        }
+
+        public List<Recipe> GetRecipesByEquipmentId(int equipmentId)
+        {
+            return _repo.Get(r => r.EquipmentId == equipmentId).ToList();
+        }
+
+        public List<Recipe> GetRecipesByHealthConditionId(int healthConditionId)
+        {
+            return _repo.Get(r => r.HealthConditionId == healthConditionId).ToList();
+        }
+
+        public List<Recipe> GetRecipesByCookingHobbyId(int cookingHobbyId)
+        {
+            return _repo.Get(r => r.CookingHobbyId == cookingHobbyId).ToList();
+        }
+
+        //public List<Recipe> GetRecipesWithListAndMeal(List<Recipe> list, string meal)//trả về 1 list từ 1 list cho trước và lọc ra các bữa ăn tương ứng
+        //{
+        //    return list.Where(r => r.Meals.Split(", ").Contains(meal)).ToList();
+        //    //ví dụ meal là Trưa thì sẽ trả lại các recipe trong Meals của nó có chứ từ "Trưa"
+        //}
+
+        public List<Recipe> GetRecipesWithMeal(string meal)//chỉ trả lại
+        {
+            List<Recipe> list = _repo.GetAll().ToList();
+            if (list.Count == 0)
+            {
+                return null;
+            }
+            return list.Where(r => r.Meals.Split(", ").Contains(meal)).ToList();
+        }
+
+        public List<IngredientAmountResponse> GetIngredientAndAmountByRecipeId(int recipeId)
+        {
+            List<RecipeAmount> listAmount = _aRepo.Get(a => a.RecipeId == recipeId).ToList();//list này chứa id của recipe, ingredientId và amount phù hợp vs recipeId nhập vào
+            List<Ingredient> ingredients = _iRepo.GetAll().ToList();
+            List<IngredientAmountResponse> list = new List<IngredientAmountResponse>();
+            foreach (RecipeAmount amount in listAmount)
+            {
+                Ingredient? ingre = ingredients.FirstOrDefault(i => i.Id == amount.IngredientId);
+                list.Add(new IngredientAmountResponse() { IngredientName = ingre.name, Amount = amount.Amount });
+            }
+            return list;
+
+        }
+
+        public List<Recipe> GetRecipeWithIngredientsList(List<int> ingredientsInputList)
+        {
+            List<RecipeAmount> listIngredients = _aRepo.GetAll().ToList();
+            List<Recipe> listResult = new List<Recipe>();
+            List<int> listIdResult = new List<int>();
+            var recipeCounts = new Dictionary<int, int>();
+            foreach (var ingredient in listIngredients)
+            {
+                if (ingredientsInputList.Contains(ingredient.IngredientId))
+                {
+                    if (!recipeCounts.ContainsKey(ingredient.RecipeId))
+                    {
+                        recipeCounts[ingredient.RecipeId] = 0;
+                    }
+                    recipeCounts[ingredient.RecipeId]++;
+                }
+            }
+            listIdResult  = recipeCounts
+        .OrderByDescending(pair => pair.Value)
+        .ThenBy(pair => pair.Key)
+        .Select(pair => pair.Key)
+        .ToList();
+            foreach(var sorted in listIdResult)
+            {
+                listResult.Add(_repo.GetById(sorted));
+            }
+            return listResult;
         }
     }
 }
