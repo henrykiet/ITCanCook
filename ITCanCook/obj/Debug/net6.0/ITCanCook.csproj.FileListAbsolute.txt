@@ -111,3 +111,4 @@ D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook\obj\Debug\net6.0\refint\ITCanCook.d
 D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook\obj\Debug\net6.0\ITCanCook.pdb
 D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook\obj\Debug\net6.0\ITCanCook.genruntimeconfig.cache
 D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook\obj\Debug\net6.0\ref\ITCanCook.dll
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook\bin\Debug\net6.0\ITCanCook.xml
