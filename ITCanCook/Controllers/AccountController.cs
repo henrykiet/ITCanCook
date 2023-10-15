@@ -58,7 +58,6 @@ namespace ITCanCook.Controllers
 
 		[HttpGet("GetUserById")]
 		[Authorize]
-
 		public async Task<IActionResult> GetUserById(Guid id)
 		{
 			var result = await _accountService.GetUserByIdAsync(id);
@@ -80,7 +79,6 @@ namespace ITCanCook.Controllers
 		}
 		[HttpGet("GetUserByEmail")]
 		[Authorize(Roles = "Admin")]
-
 		public async Task<IActionResult> GetUserByEmail(string email)
 		{
 			var result = await _accountService.GetUserByEmailAsync(email);
@@ -102,7 +100,6 @@ namespace ITCanCook.Controllers
 		}
 		[HttpPost("CreateUser")]
 		[Authorize(Roles = "Admin")]
-
 		public async Task<IActionResult> CreateUser([FromBody] CreateUserModel user)
 		{
 			var userId = await _accountService.CreateUserAsync(user);
