@@ -23,12 +23,14 @@ namespace ITCanCook.Controllers
         }
 
         [HttpGet("get-all")]
+        [Authorize]
         public List<RecipeResponse> GetAllRecipe()
         {
             return _mapper.Map<List<RecipeResponse>>(_service.GetRecipes());
         }
 
         [HttpGet("get-by-id/{recipeId:int}")]
+        [Authorize]
         public RecipeResponse GetRecipeById(int recipeId)
         {
             return _mapper.Map<RecipeResponse>(_service.GetRecipe(recipeId));
@@ -40,6 +42,7 @@ namespace ITCanCook.Controllers
         /// <param name="request">Chứa ID cũa equipment, ID của health condition, ID của cooking hobby</param>
         /// <returns></returns>
         [HttpPost("menu")]
+        [Authorize]
         public List<RecipeResponse> GetMenu([FromBody] MenuFilterRequest request)
         {
             return _service.FilterToMenu(request);
@@ -48,9 +51,10 @@ namespace ITCanCook.Controllers
         /// <summary>
         /// Lấy danh sách recipe dựa theo Id của equipment
         /// </summary>
-        /// <param name="equipmentId">1 ID của equipment</param>
+        /// <param name="equipmentId">ID của equipment</param>
         /// <returns></returns>
         [HttpGet("equipment/{equipmentId:int}")]
+        [Authorize]
         public List<RecipeResponse> GetRecipesByEquipmentId(int equipmentId)
         {
             return _mapper.Map<List<RecipeResponse>>(_service.GetRecipesByEquipmentId(equipmentId));
@@ -67,9 +71,10 @@ namespace ITCanCook.Controllers
         /// <summary>
         /// Lấy danh sách recipe dựa theo Id của Health condition
         /// </summary>
-        /// <param name="healthId">1 Id của health condition</param>
+        /// <param name="healthId">Id của health condition</param>
         /// <returns></returns>
         [HttpGet("health/{healthId:int}")]
+        [Authorize]
         public List<RecipeResponse> GetRecipesByHealthConditionId(int healthId)//, [FromQuery] int heal)
         {
             return _mapper.Map<List<RecipeResponse>>(_service.GetRecipesByHealthConditionId(healthId));
@@ -77,20 +82,22 @@ namespace ITCanCook.Controllers
         /// <summary>
         /// Lấy danh sách recipe theo cooking hobby
         /// </summary>
-        /// <param name="hobbyId">1 Id của cooking hobby</param>
+        /// <param name="hobbyId">Id của cooking hobby</param>
         /// <returns></returns>
         [HttpGet("hobby/{hobbyId:int}")]
+        [Authorize]
         public List<RecipeResponse> GetRecipesByCookingHobbyId(int hobbyId)
         {
             return _mapper.Map<List<RecipeResponse>>(_service.GetRecipesByCookingHobbyId(hobbyId));
         }
 
         /// <summary>
-        /// Lấy trả về định lượng nguyên liệu của 1 công thức nhất định
+        /// Lấy trả về định lượng nguyên liệu dựa trên recipe ID - chỉ trả về tên nguyên liệu và định lượng
         /// </summary>
-        /// <param name="recipeId">1 Id của recipe</param>
+        /// <param name="recipeId">Id của recipe</param>
         /// <returns></returns>
         [HttpGet("{recipeId:int}/recipeamount")]//cái này trả về thông tin tên thành phần và định lượng cho các recipe tương ứng
+        [Authorize]
         public List<IngredientAmountResponse> GetRecipeIngredientDetailsByRecipeId(int recipeId)
         {
             return _service.GetIngredientAndAmountByRecipeId(recipeId);
@@ -101,16 +108,19 @@ namespace ITCanCook.Controllers
         /// <param name="meal">Tên bữa ăn. vd: Sáng</param>
         /// <returns></returns>
         [HttpGet("meals")]
+        [Authorize]
         public List<RecipeResponse> GetRecipesByMeal([FromQuery] string meal)
         {
             return _mapper.Map<List<RecipeResponse>>(_service.GetRecipesWithMeal(meal));
         }
+
         /// <summary>
-        /// Lấy recipe theo nguyên liệu
+        /// Lấy recipe theo nguyên liệu - premium
         /// </summary>
-        /// <param name="inputList">List id các nguyên liệu trong món ăn</param>
+        /// <param name="inputList">List id các nguyên liệu trong món ăn - dùng cho premium</param>
         /// <returns>list recipe</returns>
         [HttpPost("ingredients/list")]
+        [Authorize(Roles = "Premium")]
         public List<RecipeResponse> GetRecipesByListIngredients([FromBody] List<int> inputList)
         {
             return _mapper.Map<List<RecipeResponse>>(_service.GetRecipeWithIngredientsList(inputList));
