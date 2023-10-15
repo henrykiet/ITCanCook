@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ITCanCook</name>
+    </assembly>
+    <members>
+        <member name="M:ITCanCook.Controllers.RecipeAmountController.GetAmountByRecipeId(System.Int32)">
+            <summary>
+            Lấy danh sách định lượng nguyên liệu dựa trên Recipe ID - trả về đầy đủ các thông tin
+            </summary>
+            <param name="recipeId">ID của recipe</param>
+            <returns></returns>
+        </member>
+        <member name="M:ITCanCook.Controllers.RecipeController.GetMenu(ITCanCook_BusinessObject.ServiceModel.RequestModel.MenuFilterRequest)">
+            <summary>
+            Tạo menu 3 món cho 3 bữa dựa trên 3 loại ID nhập vào 
+            </summary>
+            <param name="request">Chứa ID cũa equipment, ID của health condition, ID của cooking hobby</param>
+            <returns></returns>
+        </member>
+        <member name="M:ITCanCook.Controllers.RecipeController.GetRecipesByEquipmentId(System.Int32)">
+            <summary>
+            Lấy danh sách recipe dựa theo Id của equipment
+            </summary>
+            <param name="equipmentId">ID của equipment</param>
+            <returns></returns>
+        </member>
+        <member name="M:ITCanCook.Controllers.RecipeController.GetRecipesByHealthConditionId(System.Int32)">
+            <summary>
+            Lấy danh sách recipe dựa theo Id của Health condition
+            </summary>
+            <param name="healthId">Id của health condition</param>
+            <returns></returns>
+        </member>
+        <member name="M:ITCanCook.Controllers.RecipeController.GetRecipesByCookingHobbyId(System.Int32)">
+            <summary>
+            Lấy danh sách recipe theo cooking hobby
+            </summary>
+            <param name="hobbyId">Id của cooking hobby</param>
+            <returns></returns>
+        </member>
+        <member name="M:ITCanCook.Controllers.RecipeController.GetRecipeIngredientDetailsByRecipeId(System.Int32)">
+            <summary>
+            Lấy trả về định lượng nguyên liệu dựa trên recipe ID - chỉ trả về tên nguyên liệu và định lượng
+            </summary>
+            <param name="recipeId">Id của recipe</param>
+            <returns></returns>
+        </member>
+        <member name="M:ITCanCook.Controllers.RecipeController.GetRecipesByMeal(System.String)">
+            <summary>
+            Lấy món ăn theo các bữa trong ngày
+            </summary>
+            <param name="meal">Tên bữa ăn. vd: Sáng</param>
+            <returns></returns>
+        </member>
+        <member name="M:ITCanCook.Controllers.RecipeController.GetRecipesByListIngredients(System.Collections.Generic.List{System.Int32})">
+            <summary>
+            Lấy recipe theo nguyên liệu
+            </summary>
+            <param name="inputList">List id các nguyên liệu trong món ăn - dùng cho premium</param>
+            <returns>list recipe</returns>
+        </member>
+        <member name="M:ITCanCook.Controllers.RecipeStepController.GetStepsByRecipeId(System.Int32)">
+            <summary>
+            Trả về danh sách các bước nấu ăn dựa trên recipe ID - trả về đầy đủ thông tin step và các step được sắp xếp tăng dần sẵn
+            </summary>
+            <param name="recipeId"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

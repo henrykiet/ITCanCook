@@ -24,24 +24,28 @@ namespace ITCanCook.Controllers
             _mapper = mapper;
         }
         [HttpGet("get-all")]
+        [Authorize]
         public List<IngredientResponse> GetAllIgredients()
         {
             return _mapper.Map<List<IngredientResponse>>(_service.GetIngredients());
         }
 
         [HttpGet("get-by-id/{ingredientId:int}")]
+        [Authorize]
         public IngredientResponse GetIngredientById(int ingredientId)
         {
             return  _mapper.Map<IngredientResponse>(_service.GetIngredientById(ingredientId));
         }
 
         [HttpGet("{categoryId:int}/details")]
+        [Authorize]
         public List<IngredientResponse> GetIngredientsByCategoryId(int categoryId)
         {
             return _mapper.Map<List<IngredientResponse>>(_service.GetIngredientsByCategoryId(categoryId));
         }
 
         [HttpGet("{categoryId:int}/names")]
+        [Authorize]
         public List<string> GetIngredientNamesByCategoryId(int categoryId)
         {
             return _mapper.Map<List<string>>(_service.GetIngredientNamesByCategoryId(categoryId));

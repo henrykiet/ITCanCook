@@ -2,6 +2,7 @@
 using ITCanCook_BusinessObject.Service.Interface;
 using ITCanCook_BusinessObject.ServiceModel.RequestModel;
 using ITCanCook_BusinessObject.ServiceModel.ResponseModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -21,17 +22,31 @@ namespace ITCanCook.Controllers
         }
 
         [HttpGet("get-all")]
+        [Authorize]
         public List<RecipeStepResponse> GetAllSteps()
         {
             return _mapper.Map<List<RecipeStepResponse>>(_service.GetRecipeSteps());
         }
         [HttpGet("get-by-id/{stepId:int}")]
+        [Authorize]
         public RecipeStepResponse GetById(int stepId)
         {
             return _mapper.Map<RecipeStepResponse>(_service.GetRecipeStepById(stepId));
         }
+        /// <summary>
+        /// Trả về danh sách các bước nấu ăn dựa trên recipe ID - trả về đầy đủ thông tin step và các step được sắp xếp tăng dần sẵn
+        /// </summary>
+        /// <param name="recipeId"></param>
+        /// <returns></returns>
+        [HttpGet("get-by-recipe-id/{recipeId:int}")]
+        [Authorize]
+        public List<RecipeStepResponse> GetStepsByRecipeId(int recipeId)
+        {
+            return _mapper.Map<List<RecipeStepResponse>>(_service.GetStepByRecipeId(recipeId));
+        }
 
         [HttpPost("create")]
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateStep([FromBody] RecipeStepCreateRequest step)
         {
             var result = _service.CreateRecipeStep(step);
@@ -44,6 +59,7 @@ namespace ITCanCook.Controllers
         }
 
         [HttpPost("update")]
+        [Authorize(Roles = "Admin")]
         public IActionResult UpdateStep([FromBody] RecipeStepRequest step)
         {
             var result = _service.UpdateRecipeStep(step);
@@ -56,6 +72,7 @@ namespace ITCanCook.Controllers
         }
 
         [HttpPost("delete/{stepId:int}")]
+        [Authorize(Roles ="Admin")]
         public IActionResult DeleteStep(int stepId)
         {
             var result = _service.DeleteRecipeStepById(stepId);
@@ -65,12 +82,6 @@ namespace ITCanCook.Controllers
                 StatusCode = statusCode
             };
             return jsonResult;
-        }
-
-        [HttpGet("get-by-recipe-id/{recipeId:int}")]
-        public List<RecipeStepResponse> GetStepsByRecipeId(int recipeId)
-        {
-            return _mapper.Map<List<RecipeStepResponse>>(_service.GetStepByRecipeId(recipeId));
         }
     }
 }

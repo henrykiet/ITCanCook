@@ -219,3 +219,4 @@ C:\Users\ACER\Desktop\ITCanCook\ITCanCook\bin\Debug\net6.0\runtimes\win-x86\nati
 C:\Users\ACER\Desktop\ITCanCook\ITCanCook\bin\Debug\net6.0\runtimes\unix\lib\netstandard2.0\System.Data.SqlClient.dll
 C:\Users\ACER\Desktop\ITCanCook\ITCanCook\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Data.SqlClient.dll
 C:\Users\ACER\Desktop\ITCanCook\ITCanCook\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+C:\Users\ACER\Desktop\ITCanCook\ITCanCook\bin\Debug\net6.0\ITCanCook.xml

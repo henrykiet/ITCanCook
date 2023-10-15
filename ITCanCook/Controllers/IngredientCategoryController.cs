@@ -23,12 +23,14 @@ namespace ITCanCook.Controllers
             _mapper = mapper;
         }
         [HttpGet("get-all")]
+        [Authorize]
         public List<IngredientCategoryResponse> GetAllIngredientCategories()
         {
             return _mapper.Map<List<IngredientCategoryResponse>>(_service.GetIngredientCategories());
         }
 
         [HttpGet("get-by-id/{categoryId:int}")]
+        [Authorize]
         public IngredientCategoryResponse GetIngredientCategoryById(int categoryId)
         {
             return _mapper.Map<IngredientCategoryResponse>(_service.GetIngredientCategoryById(categoryId));
