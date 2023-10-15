@@ -1,17 +1,3 @@
-C:\Users\ACER\Desktop\ITCanCook\ITCanCook_DataAcecss\bin\Debug\net6.0\ITCanCook_DataAcecss.deps.json
-C:\Users\ACER\Desktop\ITCanCook\ITCanCook_DataAcecss\bin\Debug\net6.0\ITCanCook_DataAcecss.runtimeconfig.json
-C:\Users\ACER\Desktop\ITCanCook\ITCanCook_DataAcecss\bin\Debug\net6.0\ITCanCook_DataAcecss.dll
-C:\Users\ACER\Desktop\ITCanCook\ITCanCook_DataAcecss\bin\Debug\net6.0\ITCanCook_DataAcecss.pdb
-C:\Users\ACER\Desktop\ITCanCook\ITCanCook_DataAcecss\obj\Debug\net6.0\ITCanCook_DataAcecss.csproj.AssemblyReference.cache
-C:\Users\ACER\Desktop\ITCanCook\ITCanCook_DataAcecss\obj\Debug\net6.0\ITCanCook_DataAcecss.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\ACER\Desktop\ITCanCook\ITCanCook_DataAcecss\obj\Debug\net6.0\ITCanCook_DataAcecss.AssemblyInfoInputs.cache
-C:\Users\ACER\Desktop\ITCanCook\ITCanCook_DataAcecss\obj\Debug\net6.0\ITCanCook_DataAcecss.AssemblyInfo.cs
-C:\Users\ACER\Desktop\ITCanCook\ITCanCook_DataAcecss\obj\Debug\net6.0\ITCanCook_DataAcecss.csproj.CoreCompileInputs.cache
-C:\Users\ACER\Desktop\ITCanCook\ITCanCook_DataAcecss\obj\Debug\net6.0\ITCanCook_DataAcecss.dll
-C:\Users\ACER\Desktop\ITCanCook\ITCanCook_DataAcecss\obj\Debug\net6.0\refint\ITCanCook_DataAcecss.dll
-C:\Users\ACER\Desktop\ITCanCook\ITCanCook_DataAcecss\obj\Debug\net6.0\ITCanCook_DataAcecss.pdb
-C:\Users\ACER\Desktop\ITCanCook\ITCanCook_DataAcecss\obj\Debug\net6.0\ITCanCook_DataAcecss.genruntimeconfig.cache
-C:\Users\ACER\Desktop\ITCanCook\ITCanCook_DataAcecss\obj\Debug\net6.0\ref\ITCanCook_DataAcecss.dll
 D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_DataAcecss\bin\Debug\net6.0\ITCanCook_DataAcecss.deps.json
 D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_DataAcecss\bin\Debug\net6.0\ITCanCook_DataAcecss.runtimeconfig.json
 D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook_DataAcecss\bin\Debug\net6.0\ITCanCook_DataAcecss.dll

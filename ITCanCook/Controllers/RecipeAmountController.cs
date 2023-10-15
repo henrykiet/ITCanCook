@@ -25,20 +25,28 @@ namespace ITCanCook.Controllers
         }
 
         [HttpGet("get-all")]
+        [Authorize]
         public List<RecipeAmountResponse> GetAll()
         {
             return _mapper.Map<List<RecipeAmountResponse>>(_service.GetRecipeAmounts());
         }
 
         [HttpGet("get-by-id/{amountId:int}")]
+        [Authorize]
         public RecipeAmountResponse GetAmountById(int amountId)
         {
             return _mapper.Map<RecipeAmountResponse>(_service.GetRecipeAmountById(amountId)) ;
         }
 
-
+        
         //[HttpGet("get-by-recipe-id/{recipeId:int}")]
+        /// <summary>
+        /// Lấy danh sách định lượng nguyên liệu dựa trên Recipe ID - trả về đầy đủ các thông tin
+        /// </summary>
+        /// <param name="recipeId">ID của recipe</param>
+        /// <returns></returns>
         [HttpGet("recipes/{recipeId:int}/amounts")]
+        [Authorize]
         // ingredent + amount
         public List<RecipeAmountResponse> GetAmountByRecipeId(int recipeId)
         {
