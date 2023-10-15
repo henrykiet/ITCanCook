@@ -26,13 +26,15 @@ namespace ITCanCook_BusinessObject.Service.Implement
 		private readonly ITransactionRepository _transactionRepositopry;
 		private readonly IOptions<MomoOptionModel> _options;
 		private readonly UserManager<ApplicationUser> _userManager;
+		private readonly RoleManager<IdentityRole> _roleManager;
 
 		public TransactionService(ITransactionRepository transactionRepository, IOptions<MomoOptionModel> options,
-			UserManager<ApplicationUser> userManager)
+			UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
 		{
 			_transactionRepositopry = transactionRepository;
 			_options = options;
 			_userManager = userManager;
+			_roleManager = roleManager;
 		}
 		#region Momo
 		public async Task<MomoCreatePaymentResquestModel> CreatePaymentAsync(OrderInfoModel model)
@@ -75,7 +77,7 @@ namespace ITCanCook_BusinessObject.Service.Implement
 			}
 
 
-			var orderInfo = "Khách hàng: " + user.Name + "Đăng ký gói: " + transactionType;
+			var orderInfo = "Khách hàng: " + user.Name + " Đăng ký gói: " + transactionType;
 			var rawData =
 				$"partnerCode={_options.Value.PartnerCode}&accessKey={_options.Value.AccessKey}" +
 				$"&requestId={userId}&amount={amount}&orderId={orderId}&orderInfo={orderInfo}" +
@@ -215,8 +217,6 @@ namespace ITCanCook_BusinessObject.Service.Implement
 
 
 		#endregion
-
-
 		#region IsPrenium
 
 		private async Task<bool> UpdateIsPremiumIfPaidAsync(string orderId, string userId)
@@ -261,10 +261,76 @@ namespace ITCanCook_BusinessObject.Service.Implement
 				await _userManager.UpdateAsync(user);
 			}
 		}
-		//hàm test hangfire
-		public async Task<ResponseObject> ScheduleHangfireJobToUpdateIsPremium(TransactionStatus status, string userId, TransactionType isPremiumDate,double amount)
+		
+
+		#endregion
+		#region Update role prenium
+		private async Task<bool> UpdateRolePremiumIfPaidAsync(string orderId, string userId)
 		{
-				var result = new ResponseObject();
+			// Kiểm tra trạng thái của giao dịch
+			var transaction = _transactionRepositopry.GetByIdB(orderId);
+
+			if (transaction != null && transaction.Status == TransactionStatus.PAID)
+			{
+				// Tìm người dùng theo userId
+				var user = await _userManager.FindByIdAsync(userId);
+
+				if (user != null)
+				{
+					// Cập nhật role user -> Prenium
+					// Kiểm tra xem vai trò đã tồn tại, nếu chưa thì tạo mới
+					var roleExists = await _roleManager.RoleExistsAsync("Premium");
+
+					if (!roleExists)
+					{
+						// Tạo mới vai trò nếu nó chưa tồn tại
+						var newRole = new IdentityRole("Premium");
+						await _roleManager.CreateAsync(newRole);
+					}
+
+					// Thêm người dùng vào vai trò "Premium"
+					await _userManager.AddToRoleAsync(user, "Premium");
+
+					// Lưu thay đổi người dùng
+					var result = await _userManager.UpdateAsync(user);
+
+					if (result.Succeeded)
+					{
+						return true; // Cập nhật thành công
+					}
+					else
+					{
+						// Xử lý lỗi cập nhật người dùng nếu cần
+						return false;
+					}
+				}
+			}
+
+			return false; // Giao dịch không phải là PAID hoặc không tìm thấy người dùng
+		}
+
+		public async Task UpdateRolePremiumToFalseAsync(string userId)
+		{
+			// Lấy người dùng theo ID
+			var user = await _userManager.FindByIdAsync(userId);
+
+			if (user != null)
+			{
+				// Kiểm tra xem người dùng có trong vai trò "Premium" không
+				var isInRole = await _userManager.IsInRoleAsync(user, "Premium");
+
+				if (isInRole)
+				{
+					// Loại bỏ người dùng khỏi vai trò "Premium"
+					await _userManager.RemoveFromRoleAsync(user, "Premium");
+					await _userManager.AddToRoleAsync(user, "Customer");
+				}
+			}
+		}
+		#endregion
+		public async Task<ResponseObject> ScheduleHangfireJobToUpdateIsPremium(TransactionStatus status, string userId, TransactionType isPremiumDate, double amount)
+		{
+			var result = new ResponseObject();
 			try
 			{
 				// Kiểm tra xem id có tồn tại hay không
@@ -310,15 +376,15 @@ namespace ITCanCook_BusinessObject.Service.Implement
 					var newTransaction = _transactionRepositopry.Insert(transaction);
 					if (newTransaction)
 					{
-						if (await UpdateIsPremiumIfPaidAsync(transaction.Id, transaction.UserId))
+						if (await UpdateRolePremiumIfPaidAsync(transaction.Id, transaction.UserId))
 						{
 							// Giao dịch thành công
 							result.Status = 200;
 							result.Message = "Giao dịch thành công.";
 
-							// Đặt công việc Hangfire để cập nhật IsPrenium thành false sau khi hết hạn
+							// Đặt công việc Hangfire để cập nhật Role Prenium thành false sau khi hết hạn
 							var jobId = BackgroundJob.Schedule(()
-								=> UpdateIsPremiumToFalseAsync(transaction.UserId), transaction.EndDate);
+								=> UpdateRolePremiumToFalseAsync(transaction.UserId), transaction.EndDate);
 						}
 					}
 					else
@@ -347,7 +413,5 @@ namespace ITCanCook_BusinessObject.Service.Implement
 			return result;
 		}
 
-
-		#endregion
 	}
 }

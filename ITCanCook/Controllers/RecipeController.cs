@@ -115,7 +115,7 @@ namespace ITCanCook.Controllers
         }
 
         /// <summary>
-        /// Lấy recipe theo nguyên liệu
+        /// Lấy recipe theo nguyên liệu - premium
         /// </summary>
         /// <param name="inputList">List id các nguyên liệu trong món ăn - dùng cho premium</param>
         /// <returns>list recipe</returns>
