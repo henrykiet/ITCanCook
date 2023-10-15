@@ -57,7 +57,7 @@
             <summary>
             Lấy recipe theo nguyên liệu
             </summary>
-            <param name="inputList">List id các nguyên liệu trong món ăn</param>
+            <param name="inputList">List id các nguyên liệu trong món ăn - dùng cho premium</param>
             <returns>list recipe</returns>
         </member>
         <member name="M:ITCanCook.Controllers.RecipeStepController.GetStepsByRecipeId(System.Int32)">
