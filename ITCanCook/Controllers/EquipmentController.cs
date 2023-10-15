@@ -23,12 +23,14 @@ namespace ITCanCook.Controllers
         }
 
         [HttpGet("get-all")]
+        [Authorize]
         public List<EquipmentResponse> GetAllEquipments()
         {
             return _mapper.Map<List<EquipmentResponse>>(_service.GetEquipments());
         }
 
         [HttpGet("get-by-id/{hobbyId:int}")]
+        [Authorize]
         public EquipmentResponse GetEquipmentById(int hobbyId)
         {
             return _mapper.Map<EquipmentResponse>(_service.GetEquipmentById(hobbyId));
@@ -59,8 +61,10 @@ namespace ITCanCook.Controllers
             };
             return jsonResult;
         }
-        [Authorize(Roles = "Admin")]
+
+        
         [HttpPut("update")]
+        [Authorize(Roles = "Admin")]
         public IActionResult UpdateEquipment([FromBody] EquipmentRequest request)
         {
             var result = _service.UpdateEquipment(request);
