@@ -328,7 +328,7 @@ namespace ITCanCook_BusinessObject.Service.Implement
 			}
 		}
 		#endregion
-		public async Task<ResponseObject> ScheduleHangfireJobToUpdateIsPremium(TransactionStatus status, string userId, TransactionType isPremiumDate, double amount)
+		public async Task<ResponseObject> ScheduleHangfireJobToUpdateIsPremium(TransactionStatus status, string userId, TransactionType type, double amount)
 		{
 			var result = new ResponseObject();
 			try
@@ -347,10 +347,10 @@ namespace ITCanCook_BusinessObject.Service.Implement
 						TransactionDate = DateTime.Now,
 						TransactionId = "",
 						Status = status,
-						TransactionType = isPremiumDate
+						TransactionType = type
 					};
 					// Xác định EndDate dựa trên TransactionType
-					switch (isPremiumDate)
+					switch (type)
 					{
 						case TransactionType.PRENIUM_WEEK:
 							// Nếu TransactionType là PRENIUM_WEEK, thì EndDate sẽ là ngày hiện tại cộng thêm 1 tuần

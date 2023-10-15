@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ACER\\Desktop\\ITCanCook\\ITCanCook_BusinessObject\\ITCanCook_BusinessObject.csproj": {}
+    "D:\\learn\\8\\EXE201\\ITCanCook_EXE201\\ITCanCook_BusinessObject\\ITCanCook_BusinessObject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ACER\\Desktop\\ITCanCook\\ITCanCook_BusinessObject\\ITCanCook_BusinessObject.csproj": {
+    "D:\\learn\\8\\EXE201\\ITCanCook_EXE201\\ITCanCook_BusinessObject\\ITCanCook_BusinessObject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ACER\\Desktop\\ITCanCook\\ITCanCook_BusinessObject\\ITCanCook_BusinessObject.csproj",
+        "projectUniqueName": "D:\\learn\\8\\EXE201\\ITCanCook_EXE201\\ITCanCook_BusinessObject\\ITCanCook_BusinessObject.csproj",
         "projectName": "ITCanCook_BusinessObject",
-        "projectPath": "C:\\Users\\ACER\\Desktop\\ITCanCook\\ITCanCook_BusinessObject\\ITCanCook_BusinessObject.csproj",
-        "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ACER\\Desktop\\ITCanCook\\ITCanCook_BusinessObject\\obj\\",
+        "projectPath": "D:\\learn\\8\\EXE201\\ITCanCook_EXE201\\ITCanCook_BusinessObject\\ITCanCook_BusinessObject.csproj",
+        "packagesPath": "C:\\Users\\kiety\\.nuget\\packages\\",
+        "outputPath": "D:\\learn\\8\\EXE201\\ITCanCook_EXE201\\ITCanCook_BusinessObject\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\kiety\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,15 +22,14 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\ACER\\Desktop\\ITCanCook\\ITCanCook_DataAcecss\\ITCanCook_DataAcecss.csproj": {
-                "projectPath": "C:\\Users\\ACER\\Desktop\\ITCanCook\\ITCanCook_DataAcecss\\ITCanCook_DataAcecss.csproj"
+              "D:\\learn\\8\\EXE201\\ITCanCook_EXE201\\ITCanCook_DataAcecss\\ITCanCook_DataAcecss.csproj": {
+                "projectPath": "D:\\learn\\8\\EXE201\\ITCanCook_EXE201\\ITCanCook_DataAcecss\\ITCanCook_DataAcecss.csproj"
               }
             }
           }
@@ -90,25 +85,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\ACER\\Desktop\\ITCanCook\\ITCanCook_DataAcecss\\ITCanCook_DataAcecss.csproj": {
+    "D:\\learn\\8\\EXE201\\ITCanCook_EXE201\\ITCanCook_DataAcecss\\ITCanCook_DataAcecss.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ACER\\Desktop\\ITCanCook\\ITCanCook_DataAcecss\\ITCanCook_DataAcecss.csproj",
+        "projectUniqueName": "D:\\learn\\8\\EXE201\\ITCanCook_EXE201\\ITCanCook_DataAcecss\\ITCanCook_DataAcecss.csproj",
         "projectName": "ITCanCook_DataAcecss",
-        "projectPath": "C:\\Users\\ACER\\Desktop\\ITCanCook\\ITCanCook_DataAcecss\\ITCanCook_DataAcecss.csproj",
-        "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ACER\\Desktop\\ITCanCook\\ITCanCook_DataAcecss\\obj\\",
+        "projectPath": "D:\\learn\\8\\EXE201\\ITCanCook_EXE201\\ITCanCook_DataAcecss\\ITCanCook_DataAcecss.csproj",
+        "packagesPath": "C:\\Users\\kiety\\.nuget\\packages\\",
+        "outputPath": "D:\\learn\\8\\EXE201\\ITCanCook_EXE201\\ITCanCook_DataAcecss\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\kiety\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -116,7 +107,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -178,7 +168,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }
