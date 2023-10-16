@@ -399,6 +399,7 @@ namespace ITCanCook_BusinessObject.Service.Implement
 					var authClaims = new List<Claim>
 						{
 						new Claim(ClaimTypes.Email, model.Email),
+						new Claim(ClaimTypes.NameIdentifier, user.Id), // Thêm ID của người dùng vào Claim
 						new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
 						};
 
