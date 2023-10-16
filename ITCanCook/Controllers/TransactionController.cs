@@ -111,10 +111,10 @@ namespace ITCanCook.Controllers
 		}
 		//[Authorize]
 		[HttpGet("CheckAndUpdateIsPremium")]
-		public async Task<IActionResult> CheckAndUpdateIsPremium(TransactionStatus status, string userId, TransactionType isPremiumDate, double amount)
+		public async Task<IActionResult> CheckAndUpdateIsPremium(TransactionStatus status, string userId, TransactionType type, double amount)
 		{
 			// Gọi phương thức của service để cập nhật trạng thái IsPrenium của người dùng
-			var result = await _momoService.ScheduleHangfireJobToUpdateIsPremium(status, userId, isPremiumDate, amount);
+			var result = await _momoService.ScheduleHangfireJobToUpdateIsPremium(status, userId, type, amount);
 
 			// Trả về kết quả
 			var statusCode = (int)result.Status;
