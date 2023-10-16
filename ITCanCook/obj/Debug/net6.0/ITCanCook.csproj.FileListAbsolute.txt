@@ -5,6 +5,7 @@ D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook\bin\Debug\net6.0\ITCanCook.deps.jso
 D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook\bin\Debug\net6.0\ITCanCook.runtimeconfig.json
 D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook\bin\Debug\net6.0\ITCanCook.dll
 D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook\bin\Debug\net6.0\ITCanCook.pdb
+D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook\bin\Debug\net6.0\ITCanCook.xml
 D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook\bin\Debug\net6.0\AutoMapper.dll
 D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook\bin\Debug\net6.0\Hangfire.AspNetCore.dll
@@ -111,4 +112,3 @@ D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook\obj\Debug\net6.0\refint\ITCanCook.d
 D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook\obj\Debug\net6.0\ITCanCook.pdb
 D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook\obj\Debug\net6.0\ITCanCook.genruntimeconfig.cache
 D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook\obj\Debug\net6.0\ref\ITCanCook.dll
-D:\learn\8\EXE201\ITCanCook_EXE201\ITCanCook\bin\Debug\net6.0\ITCanCook.xml
